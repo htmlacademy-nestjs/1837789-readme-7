@@ -1,42 +1,42 @@
 export enum PostType {
-  VideoPost = 'videoPost',
-  TextPost = 'textPost',
-  QuotationPost = 'quotationPost',
-  PhotoPost = 'photoPost',
-  LinkPost = 'linkPost'
+  Video = 'video',
+  Text = 'text',
+  Quotation = 'quotation',
+  Photo = 'photo',
+  Link = 'link'
 }
 
 
-export type TVideoPost = {
-  type: PostType.VideoPost;
+export type VideoPost = {
+  type: PostType.Video;
   name: string;
   urlVideo: string;
   tags?: string[];
 }
 
-export type TTextPost = {
-  type: PostType.TextPost;
+export type TextPost = {
+  type: PostType.Text;
   name: string;
   title: string;
   text: string;
   tags?: string[];
 }
 
-export type TQuotationPost = {
-  type: PostType.QuotationPost;
+export type QuotationPost = {
+  type: PostType.Quotation;
   text: string;
   author: string;
   tags?: string[];
 }
 
-export type TPhotoPost = {
-  type: PostType.PhotoPost
+export type PhotoPost = {
+  type: PostType.Photo;
   photo: string;
   tags?: string[];
 }
 
-export type TLinkPost = {
-  type: PostType.LinkPost;
+export type LinkPost = {
+  type: PostType.Link;
   url: string;
   tags?: string[];
   description?: string;

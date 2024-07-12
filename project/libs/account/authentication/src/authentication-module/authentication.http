@@ -7,7 +7,7 @@ Content-Type: application/json
   "firstname": "Alina",
   "lastname": "Vdovichenko",
   "password": "1234567",
-  "avatarUrl": "https://15.design.htmlacademy.pro/static/avatar/4.jpg",
+  "avatarUrl": "https://15.design.htmlacademy.pro/static/avatar/4.jpg"
 }
 
 ###

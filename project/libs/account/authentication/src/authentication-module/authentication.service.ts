@@ -2,7 +2,7 @@ import { ConflictException, Injectable, NotFoundException, UnauthorizedException
 import { BlogUserRepository, BlogUserEntity } from '@project/blog-user';
 
 import { CreateUserDto } from '../dto/create-user.dto';
-import { AuthUserMessage } from './authentication.constant';
+import { AuthenticationResponseMessage } from './authentication.constant';
 import { LoginUserDto } from '../dto/login-user.dto';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class AuthenticationService {
       .findByEmail(email);
 
     if (existUser) {
-      throw new ConflictException(AuthUserMessage.Exists);
+      throw new ConflictException(AuthenticationResponseMessage.UserExist);
     }
 
     const userEntity = await new BlogUserEntity(blogUser)
@@ -43,11 +43,11 @@ export class AuthenticationService {
     const existUser = await this.blogUserRepository.findByEmail(email);
 
     if (!existUser) {
-      throw new NotFoundException(AuthUserMessage.NotFound);
+      throw new NotFoundException(AuthenticationResponseMessage.UserNotFound);
     }
 
     if (!await existUser.comparePassword(password)) {
-      throw new UnauthorizedException(AuthUserMessage.PasswordWrong);
+      throw new UnauthorizedException(AuthenticationResponseMessage.LoggedError);
     }
 
     return existUser;
@@ -57,7 +57,7 @@ export class AuthenticationService {
     const user = await this.blogUserRepository.findById(id);
 
     if (! user) {
-      throw new NotFoundException(AuthUserMessage.NotFound);
+      throw new NotFoundException(AuthenticationResponseMessage.UserNotFound);
     }
 
     return user;

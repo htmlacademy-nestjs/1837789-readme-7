@@ -6,3 +6,9 @@ export const AuthenticationResponseMessage = {
   UserExist: 'User with the email already exists',
   UserCreated: 'The new user has been successfully created.',
 } as const;
+
+export enum AuthUserMessage {
+  Exists = 'User with this email exists',
+  NotFound = 'User not found',
+  PasswordWrong = 'User password is wrong'
+}

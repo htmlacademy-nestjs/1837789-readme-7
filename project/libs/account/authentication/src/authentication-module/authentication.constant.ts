@@ -1,3 +1,5 @@
-export const AUTH_USER_EXISTS = 'User with this email exists';
-export const AUTH_USER_NOT_FOUND = 'User not found';
-export const AUTH_USER_PASSWORD_WRONG = 'User password is wrong';
+export enum AuthUserMessage {
+  Exists = 'User with this email exists',
+  NotFound = 'User not found',
+  PasswordWrong = 'User password is wrong'
+}

@@ -1,15 +1,22 @@
 import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { BlogUserRepository, BlogUserEntity } from '@project/blog-user';
 
 import { CreateUserDto } from '../dto/create-user.dto';
-import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './authentication.constant';
+import { AuthUserMessage } from './authentication.constant';
 import { LoginUserDto } from '../dto/login-user.dto';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
-    private readonly blogUserRepository: BlogUserRepository
-  ) {}
+    private readonly blogUserRepository: BlogUserRepository,
+
+    private readonly configService: ConfigService,
+  ) {
+    // Извлекаем настройки из конфигурации
+    console.log(configService.get<string>('db.host'));
+    console.log(configService.get<string>('db.user'));
+  }
 
   public async register(dto: CreateUserDto): Promise<BlogUserEntity> {
     const {email, firstname, lastname, password, avatarUrl} = dto;
@@ -26,7 +33,7 @@ export class AuthenticationService {
       .findByEmail(email);
 
     if (existUser) {
-      throw new ConflictException(AUTH_USER_EXISTS);
+      throw new ConflictException(AuthUserMessage.Exists);
     }
 
     const userEntity = await new BlogUserEntity(blogUser)
@@ -43,11 +50,11 @@ export class AuthenticationService {
     const existUser = await this.blogUserRepository.findByEmail(email);
 
     if (!existUser) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+      throw new NotFoundException(AuthUserMessage.NotFound);
     }
 
     if (!await existUser.comparePassword(password)) {
-      throw new UnauthorizedException(AUTH_USER_PASSWORD_WRONG);
+      throw new UnauthorizedException(AuthUserMessage.PasswordWrong);
     }
 
     return existUser;
@@ -57,7 +64,7 @@ export class AuthenticationService {
     const user = await this.blogUserRepository.findById(id);
 
     if (! user) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+      throw new NotFoundException(AuthUserMessage.NotFound);
     }
 
     return user;

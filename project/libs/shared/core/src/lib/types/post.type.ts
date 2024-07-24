@@ -1,3 +1,6 @@
+import { Comment } from './comment.type';
+import { Like } from './like.type';
+
 export enum PostType {
   Video = 'video',
   Text = 'text',
@@ -6,38 +9,40 @@ export enum PostType {
   Link = 'link'
 }
 
-
-export type VideoPost = {
-  type: PostType.Video;
-  name: string;
-  urlVideo: string;
+export type Post = {
+  id: string;
+  type: PostType;
+  userId: string;
+  title: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  isRepost?: boolean;
   tags?: string[];
+  comments?: Comment[];
+  likes?: Like[];
 }
 
-export type TextPost = {
-  type: PostType.Text;
+export type VideoPost = Post & {
+  name: string;
+  urlVideo: string;
+}
+
+export type TextPost = Post & {
   name: string;
   title: string;
   text: string;
-  tags?: string[];
 }
 
 export type QuotationPost = {
-  type: PostType.Quotation;
   text: string;
-  author: string;
-  tags?: string[];
+  authorId: string;
 }
 
 export type PhotoPost = {
-  type: PostType.Photo;
   photo: string;
-  tags?: string[];
 }
 
 export type LinkPost = {
-  type: PostType.Link;
   url: string;
-  tags?: string[];
   description?: string;
 }

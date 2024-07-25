@@ -22,7 +22,7 @@ enum PostType {
 }
 
 model Post {
-  id        String    @id @default(uuid())
+  id        String    @id @default(uuid()) @map("id")
   type      PostType
   userId    String    @map("user_id") @db.VarChar(100)
   title     String    @db.VarChar(255)

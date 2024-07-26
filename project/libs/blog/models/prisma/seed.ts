@@ -1,45 +1,33 @@
 import { PrismaClient } from '@prisma/client';
-import { Types } from 'mongoose';
 
-enum PostUuid {
-  First = '6d308040-06a2-4162-bea6-2398e9976540',
-  Second = '6g308045-98a2-4162-iea6-2338e9906540',
-  Third = '6i308045-98a2-4162-kea6-2338e9907540'
-}
+const FIRST_POST_UUID = '6d308040-06a2-4162-bea6-2398e9976540';
+const SECOND_POST_UUID = '6g308045-98a2-4162-iea6-2338e9906540';
 
-enum UserId {
-  First = '658170cbb974e9f5b946pcf4',
-  Second = '6841762309c030b503e37622',
-  Third = '658170cbb954e9f5b905ccf4'
-}
+const FIRST_USER_ID = '658170cbb974e9f5b946pcf4';
+const SECOND_USER_ID = '6841762309c030b503e37622';
 
 function getPosts() {
   return [
     {
-      id: PostUuid.First,
-      type: 'text',
-      title: 'Луна ночью',
+      id: FIRST_POST_UUID,
       tags: ['#aggd', '#oooo'],
-      userId: UserId.First,
+      userId: FIRST_USER_ID,
       isRepost: false,
     },
     {
-      id: PostUuid.Second,
-      type: 'quotation',
-      text: '«Невозможно решить проблему на том же уровне, на котором она возникла. Нужно стать выше этой проблемы, поднявшись на следующий уровень».',
-      author: 'Альберт Эйнштейн',
+      id: SECOND_POST_UUID,
       tags: ['#affd', '#ordfd'],
-      userId: UserId.Second,
+      userId: SECOND_USER_ID,
       isRepost: false,
       comments: [
         {
           text: 'Это действительно отличная цитата!',
-          userId: UserId.Second,
+          userId: FIRST_USER_ID,
         }
       ],
       likes: [
-        { userId: new Types.ObjectId().toString() },
-        { userId: new Types.ObjectId().toString() },
+        { userId: SECOND_USER_ID },
+        { userId: FIRST_USER_ID },
       ],
     }
   ]
@@ -49,15 +37,16 @@ function getPosts() {
 async function seedDb(prismaClient: PrismaClient) {
   const mockPosts = getPosts();
 
-  await Promise.all(
-    mockPosts.map(post => prismaClient.post.upsert({
+  for (const post of mockPosts) {
+    await prismaClient.post.upsert({
       where: { id: post.id },
       update: {},
-      create: post
-    }))
-  );
+      create: post,
+    })
+  }
   console.info('🤘️ Database was filled');
 }
+
 
 async function bootstrap() {
   const prismaClient = new PrismaClient();

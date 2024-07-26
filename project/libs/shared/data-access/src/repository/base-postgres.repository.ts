@@ -21,18 +21,22 @@ DocumentType = ReturnType<T['toPOJO']>
   }
 
   public async findById(id: T['id']): Promise<T> {
+    console.info(id);
     throw new Error('Not implemented');
   }
 
   public async save(entity: T): Promise<void> {
+    console.info(entity);
     throw new Error('Not implemented');
   }
 
   public async update(entity: T): Promise<void> {
+    console.info(entity);
     throw new Error('Not implemented');
   }
 
   public async deleteById(id: T['id']): Promise<void> {
+    console.info(id);
     throw new Error('Not implemented');
   }
 }

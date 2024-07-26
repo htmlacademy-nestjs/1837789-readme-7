@@ -35,7 +35,7 @@ export type TextPost = Post & {
 
 export type QuotationPost = {
   text: string;
-  authorId: string;
+  author: string;
 }
 
 export type PhotoPost = {

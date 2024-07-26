@@ -41,7 +41,18 @@ async function seedDb(prismaClient: PrismaClient) {
     await prismaClient.post.upsert({
       where: { id: post.id },
       update: {},
-      create: post,
+      create: {
+        id: post.id,
+        tags: post.tags,
+        userId: post.userId,
+        isRepost: post.isRepost,
+        comments: post.comments ? {
+          create: post.comments
+        } : undefined,
+         likes: post.likes ? {
+           create: post.likes
+       } : undefined,
+      }
     })
   }
   console.info('🤘️ Database was filled');

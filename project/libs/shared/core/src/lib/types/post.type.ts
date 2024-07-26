@@ -2,11 +2,11 @@ import { Comment } from './comment.type';
 import { Like } from './like.type';
 
 export enum PostType {
-  Video = 'video',
-  Text = 'text',
-  Quotation = 'quotation',
-  Photo = 'photo',
-  Link = 'link'
+  Video = 'Video',
+  Text = 'Text',
+  Quotation = 'Quotation',
+  Photo = 'Photo',
+  Link = 'Link'
 }
 
 export type Post = {

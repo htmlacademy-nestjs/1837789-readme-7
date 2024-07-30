@@ -1,10 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 
-const FIRST_POST_UUID = '6d308040-06a2-4162-bea6-2398e9976540';
-const SECOND_POST_UUID = '6g308045-98a2-4162-iea6-2338e9906540';
+enum PostUuid {
+  First = '6d308040-06a2-4162-bea6-2398e9976540',
+  Second = '6g308045-98a2-4162-iea6-2338e9906540',
+}
 
-const FIRST_USER_ID = '658170cbb974e9f5b946pcf4';
-const SECOND_USER_ID = '6841762309c030b503e37622';
+enum UserId {
+  First = '658170cbb974e9f5b946pcf4',
+  Second = '6841762309c030b503e37622',
+}
 
 export enum PostType {
   Video = 'Video',
@@ -17,9 +21,9 @@ export enum PostType {
 function getPosts() {
   return [
     {
-      id: FIRST_POST_UUID,
+      id: PostUuid.First,
       type: PostType.Text,
-      userId: FIRST_USER_ID,
+      userId: UserId.First,
       title: 'First Post',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -27,9 +31,9 @@ function getPosts() {
       isRepost: false,
     },
     {
-      id: SECOND_POST_UUID,
+      id: PostUuid.Second,
       type: PostType.Quotation,
-      userId: SECOND_USER_ID,
+      userId: UserId.Second,
       title: 'First Post',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -38,16 +42,16 @@ function getPosts() {
       comments: [
         {
           text: 'Это действительно отличная книга!',
-          userId: FIRST_USER_ID,
+          userId: UserId.First,
         },
         {
           text: 'Надо будет обязательно перечитать. Слишком много информации.',
-          userId: SECOND_USER_ID,
+          userId: UserId.Second,
         }
       ],
       likes: [
-        { userId: FIRST_USER_ID },
-        { userId: SECOND_USER_ID },
+        { userId: UserId.First },
+        { userId: UserId.Second },
       ],
     }
   ]

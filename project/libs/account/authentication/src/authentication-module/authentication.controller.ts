@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from '../dto/create-user.dto';
@@ -65,7 +65,7 @@ export class AuthenticationController {
   }
 
   @Get('/demo/:id')
-  public async demoPipe(@Param('id', ParseIntPipe) id: number) {
+  public async demoPipe(@Param('id') id: number) {
     console.log(typeof id);
   }
 }

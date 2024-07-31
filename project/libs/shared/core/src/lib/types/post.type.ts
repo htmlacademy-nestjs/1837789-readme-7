@@ -1,5 +1,4 @@
 import { Comment } from './comment.type';
-import { Like } from './like.type';
 
 export enum PostType {
   Video = 'Video',
@@ -18,8 +17,8 @@ export type Post = {
   updatedAt?: Date;
   isRepost?: boolean;
   tags?: string[];
+  likes?: string[];
   comments?: Comment[];
-  likes?: Like[];
 }
 
 export type VideoPost = Post & {

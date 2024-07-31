@@ -31,8 +31,9 @@ model Post {
   updatedAt DateTime  @updatedAt @map("updated_at")
   tags      String[]  @db.VarChar(10)
   isRepost  Boolean   @default(false) @map("is_reposted")
+  likes     String[]  @db.VarChar(100)
   comments  Comment[]
-  likes     Like[]
+
 
   @@index([title])
   @@map("posts")
@@ -51,13 +52,3 @@ model Comment {
   @@map("comments")
 }
 
-model Like {
-  id        String   @id @default(uuid())
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    String   @map("post_id")
-  userId    String   @map("user_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("likes")
-}

@@ -6,7 +6,8 @@ export {
   TextPost,
   QuotationPost,
   PhotoPost,
-  LinkPost
+  LinkPost,
+  PostType
  } from './lib/types/post.type';
 
 export { StorableEntity } from './lib/interfaces/storable-entity.interface';

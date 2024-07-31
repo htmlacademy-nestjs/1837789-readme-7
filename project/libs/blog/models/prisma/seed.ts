@@ -39,6 +39,7 @@ function getPosts() {
       updatedAt: new Date(),
       tags: ['#aggd', '#oooo'],
       isRepost: false,
+      likes: [ UserId.First , UserId.Second],
       comments: [
         {
           message: 'Это действительно отличная книга!',
@@ -48,10 +49,6 @@ function getPosts() {
           message: 'Надо будет обязательно перечитать. Слишком много информации.',
           userId: UserId.Second,
         }
-      ],
-      likes: [
-        { userId: UserId.First },
-        { userId: UserId.Second },
       ],
     }
   ]
@@ -74,12 +71,10 @@ async function seedDb(prismaClient: PrismaClient) {
         updatedAt: post.updatedAt,
         tags: post.tags,
         isRepost: post.isRepost,
+        likes: post.likes,
         comments: post.comments ? {
           create: post.comments
         } : undefined,
-         likes: post.likes ? {
-           create: post.likes
-         } : undefined,
       }
     })
   }

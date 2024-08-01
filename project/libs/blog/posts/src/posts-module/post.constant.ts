@@ -1,3 +1,15 @@
+import { SortDirection } from '@project/core';
+
+export enum Default {
+  PostCountLimit = 10,
+  Sort = 'desc',
+  PageCount = 1,
+}
+
+export const DEFAULT_POST_COUNT_LIMIT = 10;
+export const DEFAULT_SORT_DIRECTION = SortDirection.Desc;
+export const DEFAULT_PAGE_COUNT = 1;
+
 export const ValidationParams = {
   NameMinLength: 20,
   NameMaxLength: 50,

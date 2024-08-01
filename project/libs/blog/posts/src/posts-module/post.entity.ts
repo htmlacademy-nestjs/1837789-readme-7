@@ -1,8 +1,9 @@
-import { PostType, Entity, CommonPost, StorableEntity } from '@project/core';
+import { PostType, Entity, CommonPost, StorableEntity, PostStatus } from '@project/core';
 import { CommentEntity, CommentFactory } from '@project/comments';
 
 export class PostEntity extends Entity implements StorableEntity<CommonPost> {
   public type: PostType;
+  public status: PostStatus;
   public userId: string;
   public title: string;
   public createdAt?: Date;
@@ -34,6 +35,7 @@ export class PostEntity extends Entity implements StorableEntity<CommonPost> {
 
     this.id = post.id ?? undefined;
     this.type = post.type;
+    this.status = post.status;
     this.title = post.title;
     this.createdAt = post.createdAt;
     this.updatedAt = post.updatedAt;
@@ -60,6 +62,7 @@ export class PostEntity extends Entity implements StorableEntity<CommonPost> {
     return {
       id: this.id,
       type: this.type,
+      status: this.status,
       userId: this.userId,
       title: this.title,
       createdAt: this.createdAt,

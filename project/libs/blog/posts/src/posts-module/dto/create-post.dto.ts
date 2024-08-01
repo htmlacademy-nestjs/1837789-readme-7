@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PostType } from '@prisma/client';
+import { PostType, PostStatus } from '@project/core';
 import { IsArray, IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreatePostDto {
@@ -11,6 +11,15 @@ export class CreatePostDto {
   @IsEnum(PostType)
   @IsNotEmpty()
   public type: PostType;
+
+  @ApiProperty({
+    description: 'Post statuses enum',
+    enum: PostStatus,
+    example: PostStatus.Published
+  })
+  @IsEnum(PostStatus)
+  @IsNotEmpty()
+  public status: PostStatus;
 
   @ApiProperty({
     description: 'Post user ID',

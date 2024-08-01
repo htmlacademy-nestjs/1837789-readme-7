@@ -8,9 +8,15 @@ export enum PostType {
   Link = 'Link'
 }
 
+export enum PostStatus {
+  Published = 'Published',
+  Draft = 'Draft'
+}
+
 export type Post = {
   id: string;
   type: PostType;
+  status: PostStatus;
   userId: string;
   title: string;
   createdAt?: Date;
@@ -51,6 +57,7 @@ export type OncePost = VideoPost | TextPost | QuotationPost | PhotoPost | LinkPo
 export type CommonPost = {
   id: string;
   type: PostType;
+  status: PostStatus;
   userId: string;
   title: string;
   createdAt?: Date;

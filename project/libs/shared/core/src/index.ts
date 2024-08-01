@@ -10,7 +10,8 @@ export {
   PostType,
   Post,
   OncePost,
-  CommonPost
+  CommonPost,
+  PostStatus
  } from './lib/types/post.type';
 
 export { StorableEntity } from './lib/interfaces/storable-entity.interface';

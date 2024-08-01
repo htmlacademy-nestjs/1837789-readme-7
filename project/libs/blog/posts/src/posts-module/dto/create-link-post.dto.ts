@@ -8,7 +8,7 @@ export class CreateLinkPostDto {
   })
   @IsString()
   @IsNotEmpty()
-  public url: string;
+  public urlLink: string;
 
   @ApiProperty({
     description: 'Link description',

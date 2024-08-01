@@ -9,7 +9,7 @@ export {
   LinkPost,
   PostType,
   Post,
-  OncePostType,
+  OncePost,
   CommonPost
  } from './lib/types/post.type';
 

@@ -1,25 +1,5 @@
-import { VideoPost, TextPost, QuotationPost, PhotoPost, LinkPost, PostType, OncePostType, Entity, CommonPost } from '@project/core';
-import { StorableEntity } from '@project/core';
+import { PostType, Entity, CommonPost, StorableEntity } from '@project/core';
 import { CommentEntity, CommentFactory } from '@project/comments';
-
-function isVideoType(obj: any): obj is VideoPost {
-  return obj.type === PostType.Video;
-}
-
-function isTextType(obj: any): obj is TextPost {
-  return obj.type === PostType.Text;
-}
-
-function isQuotationType(obj: any): obj is QuotationPost {
-  return obj.type === PostType.Quotation;
-}
-function isPhotoType(obj: any): obj is PhotoPost {
-  return obj.type === PostType.Photo;
-}
-
-function isLinkType(obj: any): obj is LinkPost {
-  return obj.type === PostType.Link;
-}
 
 export class PostEntity extends Entity implements StorableEntity<CommonPost> {
   public type: PostType;
@@ -74,34 +54,10 @@ export class PostEntity extends Entity implements StorableEntity<CommonPost> {
     this.urlLink = post.urlLink ?? undefined;
     this.description = post.description ?? undefined;
 
-    if (isVideoType(post)) {
-      this.name = post.name ?? undefined;
-      this.urlVideo = post.urlVideo ?? undefined;
-    }
-
-    if (isTextType(post)) {
-      this.name = post.name ?? undefined;
-      this.text = post.text ?? undefined;
-    }
-
-    if (isQuotationType(post)) {
-      this.textQuotation = post.textQuotation ?? undefined;
-      this.authorQuotation = post.authorQuotation ?? undefined;
-    }
-
-    if (isPhotoType(post)) {
-      this.photo = post.photo ?? undefined;
-    }
-
-    if (isLinkType(post)) {
-      this.urlLink = post.urlLink ?? undefined;
-      this.description = post.description ?? undefined;
-    }
-
   }
 
-  public toPOJO(): OncePostType {
-    const basePost: { [key: string]: any } = {
+  public toPOJO(): CommonPost {
+    return {
       id: this.id,
       type: this.type,
       userId: this.userId,
@@ -111,33 +67,17 @@ export class PostEntity extends Entity implements StorableEntity<CommonPost> {
       isRepost: this.isRepost,
       tags: this.tags,
       likes: this.likes,
-      comments: this.comments?.map(comment => comment.toPOJO()) ?? []
+      comments: this.comments?.map(comment => comment.toPOJO()) ?? [],
+
+      name: this.name,
+      urlVideo: this.urlVideo,
+      annoncement: this.annoncement,
+      text: this.text,
+      textQuotation: this.textQuotation,
+      authorQuotation: this.authorQuotation,
+      photo: this.photo,
+      urlLink: this.urlLink,
+      description: this.description
     };
-
-    if (isVideoType(this)) {
-      basePost.name = this.name;
-      basePost.urlVideo = this.urlVideo;
-    }
-
-    if (isTextType(this)) {
-      basePost.name = this.name;
-      basePost.text = this.text;
-    }
-
-    if (isQuotationType(this)) {
-      basePost.text = this.text;
-      basePost.authorQuotation = this.authorQuotation;
-    }
-
-    if (isPhotoType(this)) {
-      basePost.photo = this.photo;
-    }
-
-    if (isLinkType(this)) {
-      basePost.urlLink = this.urlLink;
-      basePost.description = this.description;
-    }
-
-    return basePost as OncePostType;
   }
 }

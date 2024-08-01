@@ -8,7 +8,7 @@ export class CreateQuotationPostDto {
   })
   @IsString()
   @IsNotEmpty()
-  public text: string;
+  public textQuotation: string;
 
   @ApiProperty({
     description: 'The quotation author',
@@ -16,5 +16,5 @@ export class CreateQuotationPostDto {
   })
   @IsString()
   @IsNotEmpty()
-  public author: string;
+  public authorQuotation: string;
 }

@@ -19,7 +19,7 @@ export class UpdateTextPostDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  public title?: string;
+  public annoncement?: string;
 
   @ApiProperty({
     description: 'Post text',

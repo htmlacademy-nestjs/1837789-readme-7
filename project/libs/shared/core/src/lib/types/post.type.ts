@@ -46,7 +46,7 @@ export type LinkPost = Post & {
   description?: string;
 }
 
-export type OncePostType = VideoPost | TextPost | QuotationPost | PhotoPost | LinkPost;
+export type OncePost = VideoPost | TextPost | QuotationPost | PhotoPost | LinkPost;
 
 export type CommonPost = {
   id: string;

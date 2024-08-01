@@ -17,7 +17,7 @@ export class CreateTextPostDto {
   })
   @IsString()
   @IsNotEmpty()
-  public title: string;
+  public annoncement: string;
 
   @ApiProperty({
     description: 'Post text',

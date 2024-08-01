@@ -23,3 +23,15 @@ export const ValidationParams = {
   AuthorQuotationMinLength: 3,
   AuthorQuotationMaxLength: 50,
 }
+
+export const PostResponseMessage = {
+  FoundPostList: 'Successfully retrieving a list of messages based on request parameters',
+  PostCreated: 'The new post has been successfully created.',
+  PostValidationError: 'Validation error when creating post',
+  PostFound: 'Post found',
+  PostNotFound: 'Post not found',
+  PostDeleted: 'The post has been successfully deleted.',
+  PostUpdated: 'The post has been successfully updated.',
+  CommentCreated: 'The comment has been successfully created.',
+  CommentValidationError: 'Validation error when creating comment',
+} as const;

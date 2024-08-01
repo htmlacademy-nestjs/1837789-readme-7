@@ -9,7 +9,7 @@ import { PostFactory } from './post.factory';
 import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
-export class BlogPostService {
+export class PostService {
   constructor(
     private readonly postRepository: PostRepository,
     private readonly blogCommentRepository: CommentRepository,

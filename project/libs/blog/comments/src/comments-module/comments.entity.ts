@@ -2,7 +2,7 @@ import { Comment, Entity, StorableEntity } from '@project/core';
 
 export class CommentEntity extends Entity implements StorableEntity<Comment> {
   public createdAt: Date;
-  public updatedAt: Date;
+  public updatedAt?: Date;
   public postId?: string;
   public message: string;
   public userId: string;

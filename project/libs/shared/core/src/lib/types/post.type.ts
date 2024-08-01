@@ -14,7 +14,7 @@ export enum PostStatus {
 }
 
 export type Post = {
-  id: string;
+  id?: string;
   type: PostType;
   status: PostStatus;
   userId: string;
@@ -55,7 +55,7 @@ export type LinkPost = Post & {
 export type OncePost = VideoPost | TextPost | QuotationPost | PhotoPost | LinkPost;
 
 export type CommonPost = {
-  id: string;
+  id?: string;
   type: PostType;
   status: PostStatus;
   userId: string;

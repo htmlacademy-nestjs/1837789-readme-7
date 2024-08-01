@@ -4,13 +4,13 @@ import { PostEntity } from '../post.entity';
 export class LinkPostEntity extends PostEntity implements StorableEntity<LinkPost> {
     public type: PostType.Quotation;
     public urlLink: string;
-    public description: string;
+    public description?: string;
 
     constructor(post: LinkPost) {
         super(post);
         this.populate(post);
         this.urlLink = post.urlLink;
-        this.description = post.description;
+        this.description = post.description ?? undefined;
     }
 
     public toPOJO(): LinkPost {

@@ -4,7 +4,7 @@ import { PostRepository } from './post.repository';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostEntity } from './post.entity';
 import { PostQuery } from './post.query';
-import { CommentFactory, CommentRepository, CreateCommentDto } from '@project/comments';
+import { CommentFactory, CommentRepository, CreateCommentDto, CommentEntity } from '@project/comments';
 import { PostFactory } from './post.factory';
 import { UpdatePostDto } from './dto/update-post.dto';
 
@@ -59,7 +59,7 @@ export class PostService {
     return existsPost;
   }
 
-  public async addComment(postId: string, dto: CreateCommentDto) {
+  public async addComment(postId: string, dto: CreateCommentDto): Promise<CommentEntity> {
     const existsPost = await this.getPost(postId);
     const newComment = this.blogCommentFactory.createFromDto(dto, existsPost.id);
     await this.blogCommentRepository.save(newComment);

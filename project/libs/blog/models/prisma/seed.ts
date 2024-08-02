@@ -10,7 +10,7 @@ enum UserId {
   Second = '6841762309c030b503e37622',
 }
 
-export enum PostType {
+enum PostType {
   Video = 'Video',
   Text = 'Text',
   Quotation = 'Quotation',
@@ -18,11 +18,17 @@ export enum PostType {
   Link = 'Link'
 }
 
+enum PostStatus {
+  Published = 'Published',
+  Draft = 'Draft'
+}
+
 function getPosts() {
   return [
     {
       id: PostUuid.First,
       type: PostType.Text,
+      status: PostStatus.Draft,
       userId: UserId.First,
       title: 'First Post',
       createdAt: new Date(),
@@ -33,6 +39,7 @@ function getPosts() {
     {
       id: PostUuid.Second,
       type: PostType.Quotation,
+      status: PostStatus.Published,
       userId: UserId.Second,
       title: 'First Post',
       createdAt: new Date(),
@@ -65,6 +72,7 @@ async function seedDb(prismaClient: PrismaClient) {
       create: {
         id: post.id,
         type: post.type,
+        status: post.status,
         userId: post.userId,
         title: post.title,
         createdAt: post.createdAt,

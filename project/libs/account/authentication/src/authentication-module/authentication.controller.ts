@@ -6,6 +6,7 @@ import { LoginUserDto } from '../dto/login-user.dto';
 import { LoggedUserRdo } from '../rdo/logged-user.rdo';
 import { UserRdo } from '../rdo/user.rdo';
 import { AuthenticationResponseMessage } from './authentication.constant';
+import { MongoIdValidationPipe } from '@project/pipes';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -59,7 +60,7 @@ export class AuthenticationController {
   })
 
   @Get(':id')
-  public async show(@Param('id') id: string) {
+  public async show(@Param('id', MongoIdValidationPipe) id: string) {
     const existUser = await this.authService.getUser(id);
     return existUser.toPOJO();
   }

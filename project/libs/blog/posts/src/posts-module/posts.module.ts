@@ -6,9 +6,9 @@ import { PostRepository } from './post.repository';
 import { PostFactory } from './post.factory';
 import { CommentsModule } from '@project/comments';
 @Module({
-  imports: [PrismaClientModule, CommentsModule],
+  imports: [CommentsModule, PrismaClientModule],
   controllers: [PostController],
-  providers: [PostService, PostRepository, PostFactory],
+  providers: [PostRepository, PostService, PostFactory],
   exports: [PostService],
 })
 export class PostsModule {}

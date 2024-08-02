@@ -12,8 +12,8 @@ import { UpdatePostDto } from './dto/update-post.dto';
 export class PostService {
   constructor(
     private readonly postRepository: PostRepository,
-    private readonly blogCommentRepository: CommentRepository,
-    private readonly blogCommentFactory: CommentFactory,
+    private readonly commentRepository: CommentRepository,
+    private readonly commentFactory: CommentFactory,
   ) {}
 
   public async getAllPosts(query?: PostQuery): Promise<PaginationResult<PostEntity>> {
@@ -61,8 +61,8 @@ export class PostService {
 
   public async addComment(postId: string, dto: CreateCommentDto): Promise<CommentEntity> {
     const existsPost = await this.getPost(postId);
-    const newComment = this.blogCommentFactory.createFromDto(dto, existsPost.id);
-    await this.blogCommentRepository.save(newComment);
+    const newComment = this.commentFactory.createFromDto(dto, existsPost.id);
+    await this.commentRepository.save(newComment);
 
     return newComment;
   }

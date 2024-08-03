@@ -12,3 +12,8 @@ export enum AuthUserMessage {
   NotFound = 'User not found',
   PasswordWrong = 'User password is wrong'
 }
+
+export const AuthenticationValidateMessage = {
+  EmailNotValid: 'The email is not valid',
+  DateBirthNotValid: 'The user date birth is not valid',
+} as const;

@@ -22,17 +22,24 @@ enum PostType {
   Link
 }
 
+enum PostStatus {
+  Published
+  Draft
+}
+
 model Post {
   id        String    @id @default(uuid()) @map("id")
   type      PostType
+  status    PostStatus
   userId    String    @map("user_id") @db.VarChar(100)
   title     String    @db.VarChar(255)
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   tags      String[]  @db.VarChar(10)
   isRepost  Boolean   @default(false) @map("is_reposted")
+  likes     String[]  @db.VarChar(100)
   comments  Comment[]
-  likes     Like[]
+
 
   @@index([title])
   @@map("posts")
@@ -40,7 +47,7 @@ model Post {
 
 model Comment {
   id        String   @id @default(uuid())
-  text      String
+  message   String
   userId    String   @map("user_id") @db.VarChar(100)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -51,13 +58,3 @@ model Comment {
   @@map("comments")
 }
 
-model Like {
-  id        String   @id @default(uuid())
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    String   @map("post_id")
-  userId    String   @map("user_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("likes")
-}

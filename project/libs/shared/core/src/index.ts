@@ -6,8 +6,18 @@ export {
   TextPost,
   QuotationPost,
   PhotoPost,
-  LinkPost
+  LinkPost,
+  PostType,
+  Post,
+  OncePost,
+  CommonPost,
+  PostStatus
  } from './lib/types/post.type';
 
 export { StorableEntity } from './lib/interfaces/storable-entity.interface';
 export { EntityFactory } from './lib/interfaces/entity-factory.interface';
+export { Comment } from './lib/types/comment.type';
+export { SortDirection } from './lib/interfaces/sort-direction.interface';
+export { PaginationResult } from './lib/interfaces/pagination.interface';
+export { Token } from './lib/interfaces/token.interface';
+export { TokenPayload } from './lib/interfaces/token-payload.interface';

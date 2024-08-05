@@ -130,7 +130,6 @@ async function seedDb(prismaClient: PrismaClient) {
   console.info('🤘️ Database was filled');
 }
 
-
 async function bootstrap() {
   const prismaClient = new PrismaClient();
 

@@ -10,7 +10,7 @@ GET http://localhost:3000/api/posts?limit=2&page=1 HTTP/1.1
 ###
 
 # Get post by id
-GET http://localhost:3000/api/posts/0eb6c19a-962c-4fc7-9106-7d46b09aaab8z HTTP/1.1
+GET http://localhost:3000/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
 
 ###
 
@@ -20,10 +20,13 @@ Content-Type: application/json
 
 {
   "title": "Hello world 123",
-  "type": "Video",
+  "type": "Text",
   "status": "Draft",
-  "userId": "658ede7600f80970fcf9e111",
-  "tags": ["test_tag"]
+  "userId": "65a3f65f2c1c3209873906fb",
+  "tags": ["test_tag"],
+  "name": "sdkjsdjgldjgdlj",
+  "annoncement": "dto.annoncement",
+  "text": "dto.text"
 }
 
 ###

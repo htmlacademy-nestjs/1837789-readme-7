@@ -7,26 +7,32 @@ services:
     ports:
       - "8025:8025"
       - "1085:8080"
+      # - ${SMTP_SERVER_PORT}:8025
+      # - ${SMTP_SERVER_PORT_UI}:8080
 
   readme.notify.rabbitmq:
-    image: rabbitmq:3.11-management
-    container_name: readme.notify.rabbitmq
+      image: rabbitmq:3.11-management
+      container_name: readme.notify.rabbitmq
 
-    ports:
-      - '1088:15672'
-      - '5672:5672'
+      ports:
+        - '1088:15672'
+        - '5672:5672'
+        # - ${RABBITMQ_PORT}:5672
+        # - ${RABBITMQ_PORT_UI}:15672
 
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      environment:
+        # RABBITMQ_DEFAULT_USER: admin
+        # RABBITMQ_DEFAULT_PASS: 12345
+        RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+        RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
 
-    healthcheck:
-      test: rabbitmq-diagnostics -q ping
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      healthcheck:
+        test: rabbitmq-diagnostics -q ping
+        interval: 10s
+        timeout: 5s
+        retries: 5
 
-readme.notify.mongodb:
+  readme.notify.mongodb:
       image: mongo:4.4
       container_name: readme.notify.mongodb
 
@@ -42,25 +48,26 @@ readme.notify.mongodb:
         - readme.notify.mongodb:/data/db
 
       healthcheck:
-        test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/typoteka-notify --quiet
+        test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/readme-notify --quiet
         interval: 10s
         timeout: 10s
         retries: 5
 
-readme.notify.mongodb.ui:
+  readme.notify.mongodb.ui:
     image: mongo-express:1.0-20
     restart: always
     container_name: readme.notify.mongodb.ui
 
     ports:
       - 8086:8081
+      # - ${MONGO_LOCAL_PORT}:${MONGO_REMOTE_PORT}
 
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_USER}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_PASSWORD}
-      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@typoteka.notify.mongodb:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@readme.notify.mongodb:27017/
 
 volumes:
   readme.notify.mongodb:

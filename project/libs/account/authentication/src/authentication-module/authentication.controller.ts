@@ -9,12 +9,14 @@ import { AuthenticationResponseMessage } from './authentication.constant';
 import { MongoIdValidationPipe } from '@project/pipes';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { fillDto } from '@project/helpers';
+import { NotifyService } from '@project/account-notify';
 
 @ApiTags('authentication')
 @Controller('auth')
 export class AuthenticationController {
   constructor(
-    private readonly authService: AuthenticationService
+    private readonly authService: AuthenticationService,
+    private readonly notifyService: NotifyService,
   ) {}
 
   @ApiResponse({
@@ -30,6 +32,8 @@ export class AuthenticationController {
   @Post('register')
   public async create(@Body() dto: CreateUserDto) {
     const newUser = await this.authService.register(dto);
+    const { email, firstname, lastname } = newUser;
+    await this.notifyService.registerSubscriber({ email, firstname, lastname });
     return newUser.toPOJO();
   }
 

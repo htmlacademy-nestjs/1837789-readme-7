@@ -28,12 +28,12 @@ export class PostFactory implements EntityFactory<PostEntity> {
           ...post,
           type: dto.type,
           urlLink: dto.urlLink,
+          description: dto.description,
       })
       case PostType.Photo: return new PhotoPostEntity({
           ...post,
           type: dto.type,
           photo: dto.photo,
-
       })
       case PostType.Quotation: return new QuotationPostEntity({
           ...post,

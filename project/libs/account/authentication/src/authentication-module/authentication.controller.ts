@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, HttpCode, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from '../dto/create-user.dto';
@@ -11,6 +11,7 @@ import { fillDto } from '@project/helpers';
 import { NotifyService } from '@project/account-notify';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { RequestWithUser } from './request-with-user.interface';
+import { JwtRefreshGuard } from '../guards/jwt-refresh.guard';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -67,15 +68,21 @@ export class AuthenticationController {
     description: AuthenticationResponseMessage.UserNotFound,
   })
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   public async show(@Param('id', MongoIdValidationPipe) id: string) {
     const existUser = await this.authService.getUser(id);
     return existUser.toPOJO();
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('/demo/:id')
-  public async demoPipe(@Param('id') id: number) {
-    console.log(typeof id);
+  @UseGuards(JwtRefreshGuard)
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get a new access/refresh tokens'
+  })
+  public async refreshToken(@Req() { user }: RequestWithUser) {
+    return this.authService.createUserToken(user);
   }
 }

@@ -1,0 +1,67 @@
+version: '3.9'
+services:
+  readme.notify.fakesmtp:
+    image: gessnerfl/fake-smtp-server:2.2.0
+    container_name: "readme.notify.fakesmtp"
+    hostname: "readme.notify.fakesmtp"
+    ports:
+      - "8025:8025"
+      - "1085:8080"
+      # - ${SMTP_SERVER_PORT}:8025
+      # - ${SMTP_SERVER_PORT_UI}:8080
+
+  readme.notify.rabbitmq:
+      image: rabbitmq:3.11-management
+      container_name: readme.notify.rabbitmq
+
+      ports:
+        - '1088:15672'
+        - '5672:5672'
+        # - ${RABBITMQ_PORT}:5672
+        # - ${RABBITMQ_PORT_UI}:15672
+
+      environment:
+        # RABBITMQ_DEFAULT_USER: admin
+        # RABBITMQ_DEFAULT_PASS: 12345
+        RABBITMQ_DEFAULT_USER: alina
+        RABBITMQ_DEFAULT_PASS: 1234567
+
+      healthcheck:
+        test: rabbitmq-diagnostics -q ping
+        interval: 10s
+        timeout: 5s
+        retries: 5
+
+  readme.notify.mongodb:
+      image: mongo:4.4
+      container_name: readme.notify.mongodb
+
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: alina
+        MONGO_INITDB_ROOT_PASSWORD: 1234567
+        MONGO_INITDB_DATABASE: readme-notify
+
+      ports:
+        - 27017:27017
+
+      healthcheck:
+        test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/readme-notify --quiet
+        interval: 10s
+        timeout: 10s
+        retries: 5
+
+  readme.notify.mongodb.ui:
+    image: mongo-express:1.0-20
+    restart: always
+    container_name: readme.notify.mongodb.ui
+
+    ports:
+      - 8086:8081
+      # - ${MONGO_LOCAL_PORT}:${MONGO_REMOTE_PORT}
+
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: alina
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 1234567
+      ME_CONFIG_BASICAUTH_USERNAME: alina
+      ME_CONFIG_BASICAUTH_PASSWORD: 1234567
+      ME_CONFIG_MONGODB_URL: mongodb://alina:1234567@readme.notify.mongodb:27017/

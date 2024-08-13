@@ -6,12 +6,13 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../../../../node_modules/.prisma/client"
+  output   = "../../../../node_modules/.prisma/client"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 enum PostType {
@@ -28,18 +29,26 @@ enum PostStatus {
 }
 
 model Post {
-  id        String    @id @default(uuid()) @map("id")
-  type      PostType
-  status    PostStatus
-  userId    String    @map("user_id") @db.VarChar(100)
-  title     String    @db.VarChar(255)
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  tags      String[]  @db.VarChar(10)
-  isRepost  Boolean   @default(false) @map("is_reposted")
-  likes     String[]  @db.VarChar(100)
-  comments  Comment[]
-
+  id              String     @id @default(uuid()) @map("id")
+  type            PostType
+  status          PostStatus
+  userId          String     @map("user_id") @db.VarChar(100)
+  title           String     @db.VarChar(255)
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+  tags            String[]   @db.VarChar(10)
+  isRepost        Boolean    @default(false) @map("is_reposted")
+  likes           String[]   @db.VarChar(100)
+  comments        Comment[]
+  name            String?
+  urlVideo        String?
+  annoncement     String?
+  text            String?
+  textQuotation   String?    @map("quoted_text")
+  authorQuotation String?    @map("quoted_autor")
+  photo           String?
+  urlLink         String?    @map("link_url")
+  description     String?
 
   @@index([title])
   @@map("posts")
@@ -57,4 +66,3 @@ model Comment {
   @@index([postId])
   @@map("comments")
 }
-

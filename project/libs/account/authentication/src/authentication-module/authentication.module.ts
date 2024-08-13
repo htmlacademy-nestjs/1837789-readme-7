@@ -8,6 +8,7 @@ import { JwtAccessStrategy } from '../strategies/jwt-access.strategy';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
 import { LocalStrategy } from '../strategies/local.strategy';
+import { JwtRefreshStrategy } from '../strategies/jwt-refresh.strategy';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { LocalStrategy } from '../strategies/local.strategy';
     AuthenticationService,
     JwtAccessStrategy,
     LocalStrategy,
+    JwtRefreshStrategy,
   ]
 })
 export class AuthenticationModule {}

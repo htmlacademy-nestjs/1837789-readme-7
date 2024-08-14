@@ -39,3 +39,9 @@ GET http://localhost:4000/api/auth/66b03f1df041d16a43813af3 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJlbWFpbCI6Im1hcmtAZ21haWwuY29tIiwiZmlyc3RuYW1lIjoiTWFyayIsImxhc3RuYW1lIjoiQmFyc3VrIiwiaWF0IjoxNzIyODI2NjgzLCJleHAiOjE3MjI4NTY2ODN9.nI0raxs7QM3It2kn6a4eikndXJQWpFCeCBGqacxGZpI
 
 ###
+
+# Check user token
+POST http://localhost:3333/api/auth/check HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQwMzJmYmU0Y2FlYjg2OGM2ZWVjMzYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoidXNlciIsImxhc3RuYW1lIjoiU21pdGgiLCJmaXJzdG5hbWUiOiJLZWtzIiwiaWF0IjoxNjgzMTIxMzU1LCJleHAiOjE2ODMxMjE5NTV9.laK4-SAzu_ZMznRVsRWrHxELTGu_P48kpY_CwHPjxtk
+
+###

@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-
+import { RequestIdInterceptor } from '@project/interceptors';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
@@ -8,6 +8,7 @@ async function bootstrap() {
   const DEFAULT_PORT = 3000;
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix(GLOBAL_PREFIX);
+  app.useGlobalInterceptors(new RequestIdInterceptor());
   const port = process.env.PORT || DEFAULT_PORT;
   await app.listen(port);
   Logger.log(

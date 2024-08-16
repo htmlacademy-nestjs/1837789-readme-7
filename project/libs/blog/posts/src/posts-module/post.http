@@ -16,6 +16,7 @@ GET http://localhost:3000/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.
 
 # Create a new post
 POST http://localhost:3000/api/posts HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDBiNTBjMzNmODExMTE3MWRjZWI1NyIsImVtYWlsIjoidGVzdC11c2VyNUBtYWlsLnJ1IiwibmFtZSI6Ik5ld1VzZXIiLCJpYXQiOjE3MTU1MTg0MzMsImV4cCI6MTcxNTYwNDgzM30.SR8-Tat6isf7m1h890c0udIMGxcfJ6kkspZLmfq0CdM
 Content-Type: application/json
 
 {
@@ -37,7 +38,7 @@ DELETE http://localhost:3000/api/posts/0549e0e7-ad8c-43b8-aa35-507ba547d743 HTTP
 ###
 
 # Update post by id
-PATCH http://localhost:3000/api/posts/0eb6c19a-962c-4fc7-9106-7d46b09aaab8 HTTP/1.1
+PATCH http://localhost:3000/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -48,7 +49,7 @@ Content-Type: application/json
 ###
 
 # Create a new comment for post
-POST http://localhost:3000/api/posts/ab04593b-da99-4fe3-8b4b-e06d82e2efdd/comments HTTP/1.1
+POST http://localhost:3000/api/posts/6d308040-06a2-4162-bea6-2398e9976540/comments HTTP/1.1
 Content-Type: application/json
 
 {

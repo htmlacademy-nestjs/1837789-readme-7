@@ -3,5 +3,10 @@ export enum ApplicationServiceURL {
   Blog = 'http://localhost:3334/api/posts'
 }
 
+export enum HttpClientConsts {
+  MaxRedirects = 5,
+  Timeout = 3000
+}
+
 export const HTTP_CLIENT_MAX_REDIRECTS = 5;
 export const HTTP_CLIENT_TIMEOUT = 3000;

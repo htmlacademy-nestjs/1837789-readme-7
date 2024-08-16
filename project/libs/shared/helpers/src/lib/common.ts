@@ -30,6 +30,7 @@ export function fillDto<T, V extends PlainObject>(
 
 export function getMongoConnectionString({username, password, host, port, databaseName, authDatabase}): string {
   console.info(`mongodb://${username}:${password}@${host}:${port}/${databaseName}?authSource=${authDatabase}`);
+  console.info(`mongodb://${host}:${port}/${databaseName}?authSource=${authDatabase}`);
   return `mongodb://${host}:${port}/${databaseName}?authSource=${authDatabase}`;
 }
 

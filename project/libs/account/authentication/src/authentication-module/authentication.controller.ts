@@ -26,12 +26,10 @@ export class AuthenticationController {
     status: HttpStatus.CREATED,
     description: AuthenticationResponseMessage.UserCreated,
   })
-
   @ApiResponse({
     status: HttpStatus.CONFLICT,
     description: AuthenticationResponseMessage.UserExist,
   })
-
   @Post('register')
   public async create(@Body() dto: CreateUserDto) {
     const newUser = await this.authService.register(dto);

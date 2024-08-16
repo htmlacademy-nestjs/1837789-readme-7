@@ -34,4 +34,6 @@ export const PostResponseMessage = {
   PostUpdated: 'The post has been successfully updated.',
   CommentCreated: 'The comment has been successfully created.',
   CommentValidationError: 'Validation error when creating comment',
+  PostReposted: 'The post has been successfully reposted.',
+  LikesCount: 'The number of likes have been counted.',
 } as const;

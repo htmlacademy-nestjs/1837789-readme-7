@@ -66,4 +66,24 @@ export class PostService {
 
     return newComment;
   }
+
+  public async repostPost(userId: string, postId: string): Promise<PostEntity> {
+    const existPost = await this.getPost(postId);
+
+    existPost.updatedAt = new Date();
+    existPost.userId = userId;
+    existPost.isRepost = true;
+    await this.postRepository.save(existPost);
+
+    return existPost;
+  }
+
+  public async getLikesCount(postId: string): Promise<number> {
+    const existPost = await this.getPost(postId);
+    const likesCount = existPost.likes.length;
+
+    return likesCount;
+  }
 }
+
+

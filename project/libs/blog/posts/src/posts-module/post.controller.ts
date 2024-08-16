@@ -111,4 +111,34 @@ export class PostController {
     const newComment = await this.postService.addComment(postId, dto);
     return fillDto(CommentRdo, newComment.toPOJO())
   }
+
+  @ApiResponse({
+    type: PostRdo,
+    status: HttpStatus.OK,
+    description: PostResponseMessage.PostReposted,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: PostResponseMessage.PostNotFound,
+  })
+  @Post(':userId/:postId')
+  public async repost(@Param('userId') userId: string, @Param('postId') postId: string): Promise<PostRdo> {
+    const newPost = await this.postService.repostPost(userId, postId);
+    return fillDto(PostRdo, newPost.toPOJO());
+  }
+
+  @ApiResponse({
+    type: PostRdo,
+    status: HttpStatus.OK,
+    description: PostResponseMessage.LikesCount,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: PostResponseMessage.PostNotFound,
+  })
+  @Get(':postId/likes')
+  public async likesCount(@Param('postId') postId: string): Promise<number> {
+    const count = await this.postService.getLikesCount(postId);
+    return count;
+  }
 }

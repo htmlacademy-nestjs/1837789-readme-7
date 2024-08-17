@@ -1,11 +1,23 @@
 # Get all posts
-GET http://localhost:3000/api/posts HTTP/1.1
+GET http://localhost:4000/api/posts HTTP/1.1
 
 ###
 
 # Get posts with filter
 
-GET http://localhost:3000/api/posts?limit=2&page=1 HTTP/1.1
+GET http://localhost:4000/api/posts?limit=2&page=1 HTTP/1.1
+
+###
+
+# Get posts with filter: title = "First Post"
+
+GET http://localhost:4000/api/posts?title=First HTTP/1.1
+
+###
+
+# Get posts with filter: type = "Text"
+
+GET http://localhost:4000/api/posts?type=Text HTTP/1.1
 
 ###
 

@@ -89,6 +89,14 @@ export class PostRepository extends BasePostgresRepository<PostEntity, CommonPos
       orderBy.createdAt = query.sortDirection;
     }
 
+    if (query?.title) {
+      where.title = { contains: query.title, mode: 'insensitive' };
+    }
+
+    if (query?.type) {
+      where.type = query.type;
+    }
+
     const [records, postCount] = await Promise.all([
       this.client.post.findMany({ where, orderBy, skip, take,
         include: {
@@ -105,5 +113,14 @@ export class PostRepository extends BasePostgresRepository<PostEntity, CommonPos
       itemsPerPage: take,
       totalItems: postCount,
     }
+  }
+
+  public async findAfterDate(date: Date): Promise<PostEntity[]> {
+    const posts = await this.client.post.findMany({
+      where: { createdAt: { gt: date }, status: PostStatus.Published },
+      include: { comments: true }
+    });
+
+    return posts.map(post => this.createEntityFromDocument(post as CommonPost));
   }
 }

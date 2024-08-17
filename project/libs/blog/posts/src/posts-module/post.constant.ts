@@ -36,6 +36,8 @@ export const PostResponseMessage = {
   CommentValidationError: 'Validation error when creating comment',
   PostReposted: 'The post has been successfully reposted.',
   LikesCount: 'The number of likes have been counted.',
+  JwtAuthError: 'Failed user authorization with jwt',
+  ForbiddenReposting: 'Forbiddend reposting',
 } as const;
 
 export const QueryDescription = {

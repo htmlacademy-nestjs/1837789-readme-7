@@ -141,6 +141,7 @@ export class PostController {
     status: HttpStatus.NOT_FOUND,
     description: PostResponseMessage.PostNotFound,
   })
+  @UseGuards(CheckAuthGuard)
   @Get(':postId/likes')
   public async likesCount(@Param('postId') postId: string): Promise<number> {
     const count = await this.postService.getLikesCount(postId);
@@ -160,5 +161,23 @@ export class PostController {
 
     return postWithPagination.entities.map((blogPost) =>
       fillDto(PostRdo, blogPost.toPOJO()));
+  }
+
+  @ApiResponse({
+    type: [PostRdo],
+    status: HttpStatus.OK,
+    description: PostResponseMessage.FoundPostList
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: PostResponseMessage.JwtAuthError
+  })
+  @ApiQuery({ type: 'date', description: QueryDescription.LastDate })
+  @UseGuards(CheckAuthGuard)
+  @Get('/find-after-date')
+  public async findAfterDate(@Query('date') date: Date) {
+    const posts = await this.postService.findAfterDate(date);
+
+    return posts.map(post => fillDto(PostRdo, post.toPOJO()));
   }
 }

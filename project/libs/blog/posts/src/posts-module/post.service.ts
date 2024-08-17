@@ -84,6 +84,10 @@ export class PostService {
 
     return likesCount;
   }
+
+  public async findAfterDate(date: Date) {
+    return await this.postRepository.findAfterDate(date);
+  }
 }
 
 

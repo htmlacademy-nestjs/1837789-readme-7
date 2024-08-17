@@ -5,6 +5,7 @@ export const AuthenticationResponseMessage = {
   UserNotFound: 'User not found',
   UserExist: 'User with the email already exists',
   UserCreated: 'The new user has been successfully created.',
+  UserPasswordWrong: 'User password is wrong',
 } as const;
 
 export enum AuthUserMessage {
@@ -17,3 +18,8 @@ export const AuthenticationValidateMessage = {
   EmailNotValid: 'The email is not valid',
   DateBirthNotValid: 'The user date birth is not valid',
 } as const;
+
+export const PasswordLength = {
+  Min: 6,
+  Max: 12
+};

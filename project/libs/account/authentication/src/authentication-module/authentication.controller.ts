@@ -1,5 +1,5 @@
-import { Body, Controller, Get, HttpStatus, HttpCode, Param, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, HttpStatus, HttpCode, Param, Post, Req, UseGuards, Patch } from '@nestjs/common';
+import { ApiResponse, ApiTags, ApiBody } from '@nestjs/swagger';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoggedUserRdo } from '../rdo/logged-user.rdo';
@@ -11,8 +11,10 @@ import { fillDto } from '@project/helpers';
 import { NotifyService } from '@project/account-notify';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { RequestWithUser } from './request-with-user.interface';
+import { ChangeUserPasswordDto } from '../dto/change-user-password.dto';
 import { JwtRefreshGuard } from '../guards/jwt-refresh.guard';
 import { RequestWithTokenPayload } from './request-with-token-payload.interface';
+import { IsGuestGuard } from '../guards/is-guest.guard';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -22,6 +24,11 @@ export class AuthenticationController {
     private readonly notifyService: NotifyService,
   ) {}
 
+  @Get('/test')
+  public async test() {
+    console.log('test successful');
+  }
+
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: AuthenticationResponseMessage.UserCreated,
@@ -30,6 +37,7 @@ export class AuthenticationController {
     status: HttpStatus.CONFLICT,
     description: AuthenticationResponseMessage.UserExist,
   })
+  @UseGuards(IsGuestGuard)
   @Post('register')
   public async create(@Body() dto: CreateUserDto) {
     const newUser = await this.authService.register(dto);
@@ -67,7 +75,7 @@ export class AuthenticationController {
     status: HttpStatus.NOT_FOUND,
     description: AuthenticationResponseMessage.UserNotFound,
   })
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get(':id')
   public async show(@Param('id', MongoIdValidationPipe) id: string) {
     const existUser = await this.authService.getUser(id);
@@ -90,4 +98,25 @@ export class AuthenticationController {
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
     return payload;
   }
+
+  @ApiResponse({ status: HttpStatus.NO_CONTENT })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: AuthenticationResponseMessage.UserNotFound
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: AuthenticationResponseMessage.LoggedError
+  })
+  @ApiBody({ type: ChangeUserPasswordDto })
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Patch('change-password')
+  public async changePassword(
+    @Req() { user: { id } }: RequestWithUser,
+    @Body() { oldPassword, newPassword }: ChangeUserPasswordDto
+  ) {
+    await this.authService.changeUserPassword(id, oldPassword, newPassword);
+  }
+
 }

@@ -15,7 +15,7 @@ import { Token, User } from '@project/core';
 import { jwtConfig } from '@project/account-config';
 import { createJWTPayload } from '@project/helpers';
 import { CreateUserDto } from '../dto/create-user.dto';
-import { AuthUserMessage } from './authentication.constant';
+import { AuthUserMessage, AuthenticationResponseMessage } from './authentication.constant';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { RefreshTokenService } from '../refresh-token-module/refresh-token.service';
 
@@ -109,5 +109,16 @@ export class AuthenticationService {
     }
 
     return existUser;
+  }
+
+  public async changeUserPassword(userId: string, oldPassword: string, newPassword: string) {
+    const existUser = await this.blogUserRepository.findById(userId);
+    if (!await existUser.comparePassword(oldPassword)) {
+      throw new UnauthorizedException(AuthenticationResponseMessage.UserPasswordWrong);
+    }
+
+    const userEntity = await new BlogUserEntity(existUser).setPassword(newPassword);
+
+    this.blogUserRepository.update(userEntity);
   }
 }

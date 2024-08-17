@@ -2,7 +2,7 @@ import { SortDirection } from '@project/core';
 
 export enum Default {
   PostCountLimit = 10,
-  Sort = 'desc',
+  MaxSearchCount = 20,
   PageCount = 1,
 }
 
@@ -36,4 +36,10 @@ export const PostResponseMessage = {
   CommentValidationError: 'Validation error when creating comment',
   PostReposted: 'The post has been successfully reposted.',
   LikesCount: 'The number of likes have been counted.',
+} as const;
+
+export const QueryDescription = {
+  PaginationList: 'Query parameters for pagination by list of posts',
+  SearchedTitle: 'Post title to search for related posts',
+  LastDate: 'Last mailing date'
 } as const;

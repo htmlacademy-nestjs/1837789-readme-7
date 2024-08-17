@@ -1,5 +1,5 @@
-import { Controller, Get, Param, Post, Body, Delete, Patch, HttpCode, HttpStatus, Query } from '@nestjs/common';
-
+import { Controller, Get, Param, Post, Body, Delete, Patch, HttpCode, HttpStatus, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
+import { CheckAuthGuard, RequestWithUser } from '@project/authentication';
 import { fillDto } from '@project/helpers';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -8,8 +8,9 @@ import { PostRdo } from './rdo/post.rdo';
 import { PostQuery } from './post.query';
 import { PostWithPaginationRdo } from './rdo/post-with-pagination.rdo';
 import { CreateCommentDto, CommentRdo } from '@project/comments';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PostResponseMessage } from './post.constant';
+import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { PostResponseMessage, QueryDescription, Default } from './post.constant';
+import { InjectUserIdInterceptor } from '@project/interceptors';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -23,6 +24,7 @@ export class PostController {
     status: HttpStatus.OK,
     description: PostResponseMessage.FoundPostList
   })
+  @ApiQuery({ type: PostQuery, description: QueryDescription.PaginationList })
   @Get('/')
   public async index(@Query() query: PostQuery) {
     const postWithPagination = await this.postService.getAllPosts(query);
@@ -43,6 +45,9 @@ export class PostController {
     status: HttpStatus.BAD_REQUEST,
     description: PostResponseMessage.PostValidationError
   })
+  @ApiBody({ type: CreatePostDto })
+  @UseGuards(CheckAuthGuard)
+  @UseInterceptors(InjectUserIdInterceptor)
   @Post('/')
   public async create(@Body() dto: CreatePostDto) {
     const newPost = await this.postService.createPost(dto);
@@ -121,9 +126,9 @@ export class PostController {
     status: HttpStatus.NOT_FOUND,
     description: PostResponseMessage.PostNotFound,
   })
-  @Post(':userId/:postId')
-  public async repost(@Param('userId') userId: string, @Param('postId') postId: string): Promise<PostRdo> {
-    const newPost = await this.postService.repostPost(userId, postId);
+  @Post('/repost/:postId')
+  public async repost(@Req(){ user }: RequestWithUser, @Param('postId') postId: string): Promise<PostRdo> {
+    const newPost = await this.postService.repostPost(user.id, postId);
     return fillDto(PostRdo, newPost.toPOJO());
   }
 
@@ -140,5 +145,20 @@ export class PostController {
   public async likesCount(@Param('postId') postId: string): Promise<number> {
     const count = await this.postService.getLikesCount(postId);
     return count;
+  }
+
+  @ApiResponse({
+    type: [PostRdo],
+    status: HttpStatus.OK,
+    description: PostResponseMessage.FoundPostList
+  })
+  @ApiQuery({ type: 'string', description: QueryDescription.SearchedTitle })
+  @Get('/search')
+  public async search(@Query('title') title: string) {
+    const postWithPagination = await this.postService
+      .getAllPosts({ title, limit: Default.MaxSearchCount } as PostQuery);
+
+    return postWithPagination.entities.map((blogPost) =>
+      fillDto(PostRdo, blogPost.toPOJO()));
   }
 }

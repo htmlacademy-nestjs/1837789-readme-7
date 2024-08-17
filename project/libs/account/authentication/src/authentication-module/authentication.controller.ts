@@ -43,12 +43,14 @@ export class AuthenticationController {
     status: HttpStatus.OK,
     description: AuthenticationResponseMessage.LoggedSuccess,
   })
-
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: AuthenticationResponseMessage.UserNotFound
+  })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: AuthenticationResponseMessage.LoggedError,
   })
-
   @UseGuards(LocalAuthGuard)
   @Post('login')
   public async login(@Req() { user }: RequestWithUser) {
@@ -61,12 +63,10 @@ export class AuthenticationController {
     status: HttpStatus.OK,
     description: AuthenticationResponseMessage.UserFound,
   })
-
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
     description: AuthenticationResponseMessage.UserNotFound,
   })
-
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   public async show(@Param('id', MongoIdValidationPipe) id: string) {
@@ -74,13 +74,13 @@ export class AuthenticationController {
     return existUser.toPOJO();
   }
 
-  @UseGuards(JwtRefreshGuard)
-  @Post('refresh')
-  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get a new access/refresh tokens'
   })
+  @UseGuards(JwtRefreshGuard)
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
   public async refreshToken(@Req() { user }: RequestWithUser) {
     return this.authService.createUserToken(user);
   }

@@ -76,7 +76,6 @@ export class AuthenticationController {
     status: HttpStatus.NOT_FOUND,
     description: AuthenticationResponseMessage.UserNotFound,
   })
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   public async show(@Param('id', MongoIdValidationPipe) id: string) {
     const existUser = await this.authService.getUser(id);
@@ -140,4 +139,36 @@ export class AuthenticationController {
     });
   }
 
+  @ApiResponse({
+    type: [UserRdo],
+    status: HttpStatus.OK,
+    description: AuthenticationResponseMessage.GettingUsersById
+  })
+  @HttpCode(HttpStatus.OK)
+  @Post('get-users-by-id')
+  public async getUserList(@Body('usersIds') usersIds: string[]) {
+    const users = await this.authService.getUsersByListId(usersIds);
+    return users.map(user => fillDto(UserRdo, { ...user.toPOJO() }));
+  }
+
+  @ApiResponse({
+    type: [UserRdo],
+    status: HttpStatus.OK,
+    description: AuthenticationResponseMessage.GettingPublishersList
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: AuthenticationResponseMessage.JwtAuthError
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: AuthenticationResponseMessage.BadMongoIdError
+  })
+  @UseGuards(JwtAuthGuard)
+  @Get('/get-publishers-list')
+  public async getPublishersList(@Req() { user }: RequestWithUser) {
+    console.log(user);
+    const publishers = await this.authService.getPublishersList(user.id);
+    return publishers.map(publisher => fillDto(UserRdo, { ...publisher.toPOJO() }));
+  }
 }

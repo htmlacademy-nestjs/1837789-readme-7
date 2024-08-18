@@ -1,17 +1,15 @@
 import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
-
-import {
-  HttpClientConsts
-} from './app.config';
+import { ApiModule, HttpClient } from '@project/api-config';
 import { UsersController } from './users.controller';
-import { CheckAuthGuard } from './guards/check-auth.guard';
+import { CheckAuthGuard } from '@project/authentication';
 
 @Module({
   imports: [
+    ApiModule,
     HttpModule.register({
-      timeout: HttpClientConsts.Timeout,
-      maxRedirects: HttpClientConsts.MaxRedirects,
+      timeout: HttpClient.Timeout,
+      maxRedirects: HttpClient.MaxRedirects,
     }),
   ],
   controllers: [

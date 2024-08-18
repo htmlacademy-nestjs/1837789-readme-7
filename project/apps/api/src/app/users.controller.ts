@@ -1,10 +1,9 @@
 import { HttpService } from '@nestjs/axios';
-import { Body, Controller, Post, Req, UseFilters } from '@nestjs/common';
-
+import { Body, Controller, Post, Req, UseFilters, UseGuards, Patch } from '@nestjs/common';
 import { LoginUserDto } from '@project/authentication';
-
-import { ApplicationServiceURL } from './app.config';
+import { ApplicationServiceURL } from '@project/api-config';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
+import { CheckAuthGuard, ChangeUserPasswordDto } from '@project/authentication';
 
 @Controller('users')
 @UseFilters(AxiosExceptionFilter)
@@ -17,6 +16,12 @@ export class UsersController {
   public async login(@Body() loginUserDto: LoginUserDto) {
     const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/login`, loginUserDto);
     return data;
+  }
+
+  @UseGuards(CheckAuthGuard)
+  @Patch('change-password')
+  public async changePassword(@Body() changeUserPasswordDto: ChangeUserPasswordDto) {
+    await this.httpService.axiosRef.patch(`${ApplicationServiceURL.Users}/change-password`, changeUserPasswordDto);
   }
 
   @Post('refresh')

@@ -2,9 +2,9 @@ import { Body, Controller, Post, UseFilters, UseGuards, UseInterceptors } from '
 import { HttpService } from '@nestjs/axios';
 
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
-import { CheckAuthGuard } from './guards/check-auth.guard';
+import { CheckAuthGuard } from '@project/authentication';
 import { CreatePostDto } from '@project/posts';
-import { ApplicationServiceURL } from './app.config';
+import { ApplicationServiceURL } from '@project/api-config';
 import { InjectUserIdInterceptor } from '@project/interceptors';
 
 @Controller('posts')

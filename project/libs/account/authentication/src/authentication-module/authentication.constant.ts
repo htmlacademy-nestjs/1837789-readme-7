@@ -2,10 +2,14 @@ export const AuthenticationResponseMessage = {
   LoggedSuccess: 'User has been successfully logged.',
   LoggedError: 'Password or Login is wrong.',
   UserFound: 'User found',
+  JwtAuthError: 'Failed user authorization with jwt',
   UserNotFound: 'User not found',
   UserExist: 'User with the email already exists',
   UserCreated: 'The new user has been successfully created.',
   UserPasswordWrong: 'User password is wrong',
+  GettingUsersById: 'getting a list of users by ID',
+  BadMongoIdError: 'Bad entity mongo ID',
+  GettingPublishersList: 'getting a list of publishers the current user is subscribed to',
 } as const;
 
 export enum AuthUserMessage {

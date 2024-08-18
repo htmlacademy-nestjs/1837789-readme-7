@@ -4,3 +4,4 @@ export { CreateUserDto } from './dto/create-user.dto';
 export { CheckAuthGuard } from './guards/check-auth.guard';
 export { IsGuestGuard } from './guards/is-guest.guard';
 export { RequestWithUser } from './authentication-module/request-with-user.interface';
+export { ChangeUserPasswordDto } from './dto/change-user-password.dto';

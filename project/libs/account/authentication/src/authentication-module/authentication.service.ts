@@ -20,6 +20,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { AuthUserMessage, AuthenticationResponseMessage } from './authentication.constant';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { RefreshTokenService } from '../refresh-token-module/refresh-token.service';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class AuthenticationService {
@@ -127,15 +128,15 @@ export class AuthenticationService {
     this.blogUserRepository.update(userEntity);
   }
 
-  public async subscribe(subscriberId: string, authorId: string) {
+  public async subscribe(subscriberId: string, userId: string) {
     const subscriber = await this.blogUserRepository.findById(subscriberId);
     if (!subscriber) {
       throw new NotFoundException(`Subscriber user with id ${subscriberId} not found`);
     }
 
-    const author = await this.blogUserRepository.findById(authorId);
+    const author = await this.blogUserRepository.findById(userId);
     if (!author) {
-      throw new NotFoundException(`Author user with id ${authorId} not found`);
+      throw new NotFoundException(`Author user with id ${userId} not found`);
     }
 
     await this.blogUserRepository.update(author.updateSubscribers(subscriberId));
@@ -147,5 +148,14 @@ export class AuthenticationService {
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.FilesStorage}/${fileId}`);
 
     return data;
+  }
+
+  public async getUsersByListId(usersListId: string[] = []) {
+    return this.blogUserRepository.findListById(
+      usersListId.filter(id => Types.ObjectId.isValid(id)));
+  }
+
+  public async getPublishersList(subscriberId: string) {
+    return await this.blogUserRepository.findPublishersList(subscriberId);
   }
 }

@@ -10,6 +10,8 @@ import {
   UnauthorizedException
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
+import { HttpService } from '@nestjs/axios';
+import { ApplicationServiceURL } from '@project/api-config';
 import { BlogUserRepository, BlogUserEntity } from '@project/blog-user';
 import { Token, User } from '@project/core';
 import { jwtConfig } from '@project/account-config';
@@ -28,6 +30,7 @@ export class AuthenticationService {
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY) private readonly jwtOptions: ConfigType<typeof jwtConfig>,
     private readonly refreshTokenService: RefreshTokenService,
+    private readonly httpService: HttpService,
   ) {}
 
   public async register(dto: CreateUserDto): Promise<BlogUserEntity> {
@@ -38,6 +41,8 @@ export class AuthenticationService {
       firstname,
       lastname,
       avatarUrl,
+      registrationDate: null,
+      subscribers: [],
       passwordHash: ''
     };
 
@@ -120,5 +125,27 @@ export class AuthenticationService {
     const userEntity = await new BlogUserEntity(existUser).setPassword(newPassword);
 
     this.blogUserRepository.update(userEntity);
+  }
+
+  public async subscribe(subscriberId: string, authorId: string) {
+    const subscriber = await this.blogUserRepository.findById(subscriberId);
+    if (!subscriber) {
+      throw new NotFoundException(`Subscriber user with id ${subscriberId} not found`);
+    }
+
+    const author = await this.blogUserRepository.findById(authorId);
+    if (!author) {
+      throw new NotFoundException(`Author user with id ${authorId} not found`);
+    }
+
+    await this.blogUserRepository.update(author.updateSubscribers(subscriberId));
+
+    return author;
+  }
+
+  public async getAvatar(fileId: string) {
+    const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.FilesStorage}/${fileId}`);
+
+    return data;
   }
 }

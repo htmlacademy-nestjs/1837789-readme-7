@@ -21,7 +21,7 @@ export class RefreshTokenService {
     const refreshToken = new RefreshTokenEntity({
       tokenId: payload.tokenId,
       createdAt: new Date(),
-      userId: payload.sub,
+      userId: payload.id,
       expiresIn: dayjs().add(timeValue.value, timeValue.unit).toDate()
     });
 

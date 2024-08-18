@@ -15,6 +15,7 @@ import { ChangeUserPasswordDto } from '../dto/change-user-password.dto';
 import { JwtRefreshGuard } from '../guards/jwt-refresh.guard';
 import { RequestWithTokenPayload } from './request-with-token-payload.interface';
 import { IsGuestGuard } from '../guards/is-guest.guard';
+import { CreateSubscribeDto } from '../dto/create-subscribe.dto';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -75,7 +76,7 @@ export class AuthenticationController {
     status: HttpStatus.NOT_FOUND,
     description: AuthenticationResponseMessage.UserNotFound,
   })
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   public async show(@Param('id', MongoIdValidationPipe) id: string) {
     const existUser = await this.authService.getUser(id);
@@ -113,10 +114,30 @@ export class AuthenticationController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Patch('change-password')
   public async changePassword(
-    @Req() { user: { id } }: RequestWithUser,
+    @Req() { user }: RequestWithUser,
     @Body() { oldPassword, newPassword }: ChangeUserPasswordDto
   ) {
-    await this.authService.changeUserPassword(id, oldPassword, newPassword);
+    await this.authService.changeUserPassword(user.id, oldPassword, newPassword);
+  }
+
+  @ApiResponse({ status: HttpStatus.OK })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: AuthenticationResponseMessage.UserNotFound
+  })
+  @ApiBody({ type: CreateSubscribeDto })
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Patch('subscribe')
+  public async subscribe(
+    @Req() { user }: RequestWithUser,
+    @Body() dto: CreateSubscribeDto
+  ) {
+    const userData = await this.authService.subscribe(user.id, dto.userId);
+    return fillDto(UserRdo, {
+      ...userData.toPOJO(),
+      avatar: userData.avatarUrl ? await this.authService.getAvatar(userData.avatarUrl) : undefined
+    });
   }
 
 }

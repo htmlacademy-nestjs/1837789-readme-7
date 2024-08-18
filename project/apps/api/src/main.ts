@@ -5,11 +5,11 @@ import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const GLOBAL_PREFIX = 'api';
-  const DEFAULT_PORT = 3000;
+  const DEFAULT_PORT = 3005;
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix(GLOBAL_PREFIX);
   app.useGlobalInterceptors(new RequestIdInterceptor());
-  const port = process.env.PORT || DEFAULT_PORT;
+  const port = process.env.API_PORT || DEFAULT_PORT;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${GLOBAL_PREFIX}`

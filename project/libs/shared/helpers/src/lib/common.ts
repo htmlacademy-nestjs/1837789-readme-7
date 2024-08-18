@@ -30,10 +30,11 @@ export function fillDto<T, V extends PlainObject>(
 
 export function getMongoConnectionString({username, password, host, port, authDatabase, databaseName}): string {
   console.info(`mongodb://${username}:${password}@${host}:${port}/${databaseName}?authSource=${authDatabase}`);
-  return `mongodb://${username}:${password}@${host}:${port}`;
+  return `mongodb://${host}:${port}/${databaseName}?authSource=${authDatabase}`;
 }
 
 export function getRabbitMQConnectionString({user, password, host, port}): string {
+  console.log(`amqp://${user}:${password}@${host}:${port}`);
   return `amqp://${user}:${password}@${host}:${port}`;
 }
 

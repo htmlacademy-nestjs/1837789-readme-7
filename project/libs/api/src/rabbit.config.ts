@@ -3,7 +3,7 @@ import { plainToClass } from 'class-transformer';
 import { RabbitConfiguration } from './rabbit/rabbit.env';
 import { DEFAULT_RABBIT_PORT } from './rabbit/rabbit.const';
 
-const RADIX_DECIMAIL =10;
+const RADIX_DECIMAIL = 10;
 
 async function getConfig(): Promise<RabbitConfiguration> {
 

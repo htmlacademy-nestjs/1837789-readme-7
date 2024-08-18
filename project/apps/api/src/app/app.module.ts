@@ -3,6 +3,7 @@ import { HttpModule } from '@nestjs/axios';
 import { ApiModule, HttpClient } from '@project/api-config';
 import { UsersController } from './users.controller';
 import { CheckAuthGuard } from '@project/authentication';
+import { BlogController } from './blog.controller';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { CheckAuthGuard } from '@project/authentication';
     }),
   ],
   controllers: [
-    UsersController
+    UsersController,
+    BlogController,
   ],
   providers: [CheckAuthGuard],
 })

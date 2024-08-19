@@ -4,6 +4,7 @@ import { ApiModule, HttpClient } from '@project/api-config';
 import { UsersController } from './users.controller';
 import { CheckAuthGuard } from '@project/authentication';
 import { BlogController } from './blog.controller';
+import { UsersService } from './users.service';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { BlogController } from './blog.controller';
     UsersController,
     BlogController,
   ],
-  providers: [CheckAuthGuard],
+  providers: [UsersService, CheckAuthGuard],
 })
 export class AppModule {}

@@ -27,3 +27,13 @@ export const PasswordLength = {
   Min: 6,
   Max: 12
 };
+
+export const Avatar = {
+  MaxSize: 500000,
+  AvailableTypes: /(jpe?g|png)/
+};
+
+export const NameLength = {
+  Min: 3,
+  Max: 50
+};

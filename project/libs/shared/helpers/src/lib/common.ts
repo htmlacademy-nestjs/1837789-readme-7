@@ -1,4 +1,7 @@
 import { ClassTransformOptions, plainToInstance } from 'class-transformer';
+import 'multer';
+import { ApplicationServiceURL } from '@project/api-config';
+import { HttpService } from '@nestjs/axios';
 
 export type DateTimeUnit = 's' | 'h' | 'd' | 'm' | 'y';
 export type TimeAndUnit = { value: number; unit: DateTimeUnit };
@@ -55,4 +58,16 @@ export function parseTime(time: string): TimeAndUnit {
   }
 
   return { value, unit }
+}
+
+export const saveFile = async (httpService: HttpService, file: Express.Multer.File) => {
+  const formData = new FormData();
+  const formFile = (new Blob([file.buffer])).slice(0, file.size, file.mimetype);
+  formData.append('file', formFile, file.originalname);
+  const { data } = await httpService.axiosRef.post(`${ApplicationServiceURL.FilesStorage}/upload`,
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } }
+  );
+
+  return data;
 }

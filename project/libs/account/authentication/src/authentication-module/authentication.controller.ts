@@ -16,6 +16,7 @@ import { JwtRefreshGuard } from '../guards/jwt-refresh.guard';
 import { RequestWithTokenPayload } from './request-with-token-payload.interface';
 import { IsGuestGuard } from '../guards/is-guest.guard';
 import { CreateSubscribeDto } from '../dto/create-subscribe.dto';
+import { UserPublicInfoRdo } from '../rdo/user-public-info.rdo';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -170,5 +171,25 @@ export class AuthenticationController {
     console.log(user);
     const publishers = await this.authService.getPublishersList(user.id);
     return publishers.map(publisher => fillDto(UserRdo, { ...publisher.toPOJO() }));
+  }
+
+  @ApiResponse({
+    type: UserPublicInfoRdo,
+    status: HttpStatus.OK,
+    description: AuthenticationResponseMessage.UserFound
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: AuthenticationResponseMessage.UserNotFound
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: AuthenticationResponseMessage.BadMongoIdError
+  })
+  @Get('/public-info/:userId')
+  public async getUserPublicInfo(@Param('userId', MongoIdValidationPipe) userId: string) {
+    const user = (await this.authService.getUserById(userId)).toPOJO();
+
+    return fillDto(UserPublicInfoRdo, { ...user, subscribers: user.subscribers.length });
   }
 }

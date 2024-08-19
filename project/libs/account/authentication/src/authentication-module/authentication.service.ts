@@ -158,4 +158,13 @@ export class AuthenticationService {
   public async getPublishersList(subscriberId: string) {
     return await this.blogUserRepository.findPublishersList(subscriberId);
   }
+
+   public async getUserById(id: string) {
+    const existUser = await this.blogUserRepository.findById(id);
+    if (!existUser) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    return existUser;
+  }
 }

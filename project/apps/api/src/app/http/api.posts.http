@@ -1,0 +1,36 @@
+# Получение списка из всех публикаций.
+GET http://localhost:3005/api/posts HTTP/1.1
+
+###
+
+# 1.17. Поиск публикаций по названию.
+GET http://localhost:3005/api/posts?title=First HTTP/1.1
+
+###
+
+# Get posts with filter: type = "Text"
+GET http://localhost:3005/api/posts?type=Text HTTP/1.1
+
+###
+
+# Просмотр детальной информации о публикации.
+GET http://localhost:3000/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
+
+###
+
+# 1.3. Создание новых публикаций в блоге разных видов: видео, текст, цитата, фото, ссылка.
+POST http://localhost:3005/api/posts HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQwMzJmYmU0Y2FlYjg2OGM2ZWVjMzYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoidXNlciIsImxhc3RuYW1lIjoiU21pdGgiLCJmaXJzdG5hbWUiOiJLZWtzIiwiaWF0IjoxNjgzMTI0MTA5LCJleHAiOjE2ODMxMjQ3MDl9.oHiIvy7hGEuDaI7e7Jspbcd68_5CMKNe2qzkMV6bDe8
+Content-Type: application/json
+
+{
+  "title": "Hello world 123",
+  "type": "Text",
+  "status": "Draft",
+  "userId": "65a3f65f2c1c3209873906fb",
+  "tags": ["test_tag"],
+  "name": "sdkjsdjgldjgdlj",
+  "annoncement": "dto.annoncement",
+  "text": "dto.text"
+}
+###

@@ -62,7 +62,7 @@ export class PostRepository extends BasePostgresRepository<PostEntity, CommonPos
       throw new NotFoundException(`Post with id ${id} not found.`);
     }
 
-    return this.createEntityFromDocument({ ...document, type: document.type as PostType, status: document.status as PostStatus });
+    return this.createEntityFromDocument({ ...document, type: document.type as PostType, status: document.status as PostStatus, originalId: null } as CommonPost);
   }
 
   public async update(entity: PostEntity): Promise<void> {
@@ -79,14 +79,40 @@ export class PostRepository extends BasePostgresRepository<PostEntity, CommonPos
     });
   }
 
-  public async find(query?: PostQuery): Promise<PaginationResult<PostEntity>> {
+  public async find(query?: PostQuery, isOnlyDraft = false, usersIds: string[] = []): Promise<PaginationResult<PostEntity>> {
     const skip = query?.page && query?.limit ? (query.page - 1) * query.limit : undefined;
     const take = query?.limit;
     const where: Prisma.PostWhereInput = {};
     const orderBy: Prisma.PostOrderByWithRelationInput = {};
+    where.status = isOnlyDraft ? PostStatus.Draft : PostStatus.Published;
 
-    if (query?.sortDirection) {
+    if (usersIds?.length > 0) {
+      where.userId = { in: usersIds };
+    }
+
+
+    if (query?.sortByComments) {
+      orderBy.comments = { _count: query.sortByComments };
+    } else if (query?.sortByLikes) {
+      orderBy.likesCount = query.sortByLikes;
+    } else if (query?.sortDirection) {
       orderBy.createdAt = query.sortDirection;
+    }
+
+    if (query?.title) {
+      where.title = { contains: query.title, mode: 'insensitive' };
+    }
+
+    if (query?.type) {
+      where.type = query.type;
+    }
+
+    if (query?.userId) {
+      where.userId = query.userId;
+    }
+
+    if (query?.tag) {
+      where.tags = { has: query.tag };
     }
 
     const [records, postCount] = await Promise.all([
@@ -105,5 +131,43 @@ export class PostRepository extends BasePostgresRepository<PostEntity, CommonPos
       itemsPerPage: take,
       totalItems: postCount,
     }
+  }
+
+  public async findAfterDate(date: Date): Promise<PostEntity[]> {
+    const posts = await this.client.post.findMany({
+      where: { createdAt: { gt: date }, status: PostStatus.Published },
+      include: { comments: true }
+    });
+
+    return posts.map(post => this.createEntityFromDocument(post as CommonPost));
+  }
+
+  public async repost(entity: PostEntity, userId: string): Promise<PostEntity> {
+    const { id, ...pojoEntity } = entity.toPOJO();
+
+    const record = await this.client.post.create({
+      data: {
+        ...pojoEntity,
+        originalId: id,
+        userId,
+        originalUserId: entity.userId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        isRepost: true,
+        comments: {
+          connect: []
+        },
+      }
+    });
+
+    return this.createEntityFromDocument(record as CommonPost);
+  }
+
+  public async like(entity: PostEntity): Promise<void> {
+    const pojoEntity = entity.toPOJO();
+    await this.client.post.update({
+      where: { id: entity.id },
+      data: { likes: pojoEntity.likes, likesCount: pojoEntity.likesCount }
+    });
   }
 }

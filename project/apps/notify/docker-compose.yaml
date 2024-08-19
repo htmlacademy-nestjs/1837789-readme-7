@@ -42,10 +42,10 @@ services:
         MONGO_INITDB_DATABASE: readme-notify
 
       ports:
-        - 27017:27017
+        - 27018:27018
 
       healthcheck:
-        test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/readme-notify --quiet
+        test: echo 'db.runCommand("ping").ok' | mongosh localhost:27018/readme-notify --quiet
         interval: 10s
         timeout: 10s
         retries: 5
@@ -64,4 +64,4 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: 1234567
       ME_CONFIG_BASICAUTH_USERNAME: alina
       ME_CONFIG_BASICAUTH_PASSWORD: 1234567
-      ME_CONFIG_MONGODB_URL: mongodb://alina:1234567@readme.notify.mongodb:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://alina:1234567@readme.notify.mongodb:27018/

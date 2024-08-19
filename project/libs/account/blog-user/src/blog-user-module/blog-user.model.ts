@@ -26,6 +26,12 @@ export class BlogUserModel extends Document implements AuthUser {
   @Prop()
   public avatarUrl: string;
 
+  @Prop()
+  subscribers: string[];
+
+  @Prop()
+  registrationDate: Date;
+
   @Prop({
     required: true,
   })

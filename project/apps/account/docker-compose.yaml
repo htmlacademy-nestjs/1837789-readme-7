@@ -16,18 +16,12 @@ services:
     volumes:
       - readme.mongo.account:/data/db
 
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo mongodb://${MONGO_USER}:${MONGO_PASSWORD}@localhost:${MONGO_PORT}/?authSource=${MONGO_DB} --quiet
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
   readme.account.mongo.ui:
     image: mongo-express:1.0.2-20
     restart: always
     container_name: readme.account.mongo.ui
     ports:
-      - 8081:8081
+      - ${MONGO_LOCAL_PORT}:${MONGO_REMOTE_PORT}
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_USER}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_PASSWORD}

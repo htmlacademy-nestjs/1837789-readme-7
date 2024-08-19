@@ -15,9 +15,11 @@ export enum PostStatus {
 
 export type Post = {
   id?: string;
+  originalId: string | null;
   type: PostType;
   status: PostStatus;
   userId: string;
+  originalUserId?: string | null;
   title: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -56,15 +58,18 @@ export type OncePost = VideoPost | TextPost | QuotationPost | PhotoPost | LinkPo
 
 export type CommonPost = {
   id?: string;
+  originalId: string | null;
   type: PostType;
   status: PostStatus;
   userId: string;
+  originalUserId?: string | null;
   title: string;
   createdAt?: Date;
   updatedAt?: Date;
   isRepost?: boolean;
   tags?: string[];
   likes?: string[];
+  likesCount?: number;
   comments?: Comment[];
 
   name?: string;

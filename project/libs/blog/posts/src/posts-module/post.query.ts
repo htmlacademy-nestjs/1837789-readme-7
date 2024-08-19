@@ -1,7 +1,8 @@
 import { Transform } from 'class-transformer';
-import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsIn, IsMongoId, IsNumber, IsOptional, IsString } from 'class-validator';
 
 import { SortDirection } from '@project/core';
+import { PostType } from '@project/core';
 
 import {
   DEFAULT_POST_COUNT_LIMIT,
@@ -27,4 +28,26 @@ export class PostQuery {
   @IsString()
   @IsOptional()
   public title: string;
+
+  @IsIn(Object.values(SortDirection))
+  @IsOptional()
+  public sortByLikes: SortDirection;
+
+  @IsIn(Object.values(SortDirection))
+  @IsOptional()
+  public sortByComments: SortDirection;
+
+  @IsString()
+  @IsEnum(PostType)
+  @IsOptional()
+  public type: PostType;
+
+  @IsString()
+  @IsMongoId()
+  @IsOptional()
+  public userId: string;
+
+  @IsString()
+  @IsOptional()
+  public tag: string;
 }

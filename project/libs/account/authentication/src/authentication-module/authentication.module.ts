@@ -7,6 +7,11 @@ import { NotifyModule } from '@project/account-notify';
 import { JwtAccessStrategy } from '../strategies/jwt-access.strategy';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
+import { LocalStrategy } from '../strategies/local.strategy';
+import { JwtRefreshStrategy } from '../strategies/jwt-refresh.strategy';
+import { RefreshTokenModule } from '../refresh-token-module/refresh-token.module';
+import { HttpModule } from '@nestjs/axios';
+import { HttpClient } from '@project/api-config';
 
 @Module({
   imports: [
@@ -15,12 +20,19 @@ import { AuthenticationService } from './authentication.service';
       inject: [ConfigService],
       useFactory: getJwtOptions,
     }),
-    NotifyModule
+    NotifyModule,
+    RefreshTokenModule,
+    HttpModule.register({
+      timeout: HttpClient.Timeout,
+      maxRedirects: HttpClient.MaxRedirects,
+    }),
   ],
   controllers: [AuthenticationController],
   providers: [
     AuthenticationService,
     JwtAccessStrategy,
+    LocalStrategy,
+    JwtRefreshStrategy,
   ]
 })
 export class AuthenticationModule {}

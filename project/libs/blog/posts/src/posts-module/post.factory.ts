@@ -16,9 +16,11 @@ export class PostFactory implements EntityFactory<PostEntity> {
 
   public static createFromCreatePostDto(dto: CreatePostDto): PostEntity {
     const post = {
+      originalId: null,
       status: dto.status,
       tags: dto.tags,
       userId: dto.userId,
+      originalUserId: null,
       title: dto.title,
       comments: [],
       likesCount: 0,

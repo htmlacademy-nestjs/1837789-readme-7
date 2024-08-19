@@ -32,7 +32,6 @@ export class PostController {
       ...postWithPagination,
       entities: postWithPagination.entities.map((blogPost) => blogPost.toPOJO())
     };
-
     return fillDto(PostWithPaginationRdo, result);
   }
 
@@ -77,6 +76,7 @@ export class PostController {
     status: HttpStatus.NOT_FOUND,
     description: PostResponseMessage.PostNotFound
   })
+  @UseGuards(CheckAuthGuard)
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   public async destroy(@Param('id') id: string) {
@@ -92,6 +92,8 @@ export class PostController {
     status: HttpStatus.NOT_FOUND,
     description: PostResponseMessage.PostNotFound
   })
+  @UseGuards(CheckAuthGuard)
+  @UseInterceptors(InjectUserIdInterceptor)
   @Patch('/:id')
   public async update(@Param('id') id: string, @Body() dto: UpdatePostDto) {
     const updatedPost = await this.postService.updatePost(id, dto);
@@ -142,10 +144,10 @@ export class PostController {
     description: PostResponseMessage.PostNotFound,
   })
   @UseGuards(CheckAuthGuard)
-  @Get(':postId/likes')
-  public async likesCount(@Param('postId') postId: string): Promise<number> {
-    const count = await this.postService.getLikesCount(postId);
-    return count;
+  @Patch('/like/:postId')
+  public async likesCount(@Req() {user}: Request & RequestWithUser, @Param('postId') postId: string): Promise<PostRdo> {
+    const post = await this.postService.like(postId, user.id);
+    return fillDto(PostRdo, post.toPOJO());
   }
 
   @ApiResponse({
@@ -179,5 +181,69 @@ export class PostController {
     const posts = await this.postService.findAfterDate(date);
 
     return posts.map(post => fillDto(PostRdo, post.toPOJO()));
+  }
+
+  @ApiResponse({
+    type: PostWithPaginationRdo,
+    status: HttpStatus.OK,
+    description: PostResponseMessage.FoundPostList
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: PostResponseMessage.JwtAuthError
+  })
+  @UseGuards(CheckAuthGuard)
+  @Get('/draft')
+  public async getUserDraftPosts(@Req() { user }: RequestWithUser) {
+    const postWithPagination = await this.postService
+      .getAllPosts({ userId: user.id } as PostQuery, true);
+
+    const result = {
+      ...postWithPagination,
+      entities: postWithPagination.entities.map((blogPost) => blogPost.toPOJO())
+    };
+
+    return fillDto(PostWithPaginationRdo, result);
+  }
+
+  @ApiResponse({
+    type: PostWithPaginationRdo,
+    status: HttpStatus.OK,
+    description: PostResponseMessage.FoundPostList
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: PostResponseMessage.UserNotFound
+  })
+  @Get('/user/:userId')
+  public async getUserPosts(@Param('userId') userId: string) {
+    const postWithPagination = await this.postService.getAllPosts({ userId } as PostQuery);
+    const result = {
+      ...postWithPagination,
+      entities: postWithPagination.entities.map((blogPost) => blogPost.toPOJO())
+    };
+
+    return fillDto(PostWithPaginationRdo, result);
+  }
+
+  @ApiResponse({
+    type: PostWithPaginationRdo,
+    status: HttpStatus.OK,
+    description: PostResponseMessage.FoundPostList
+  })
+  @ApiQuery({ type: PostQuery, description: QueryDescription.PaginationList })
+  @UseGuards(CheckAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Post('/ribbon')
+  public async contentRibbon(@Body() usersIds: string[], @Query() query: PostQuery) {
+    const postWithPagination = await this.postService
+      .getAllPosts(query, false, usersIds);
+
+    const result = {
+      ...postWithPagination,
+      entities: postWithPagination.entities.map(post => post.toPOJO())
+    };
+
+    return fillDto(PostWithPaginationRdo, result);
   }
 }

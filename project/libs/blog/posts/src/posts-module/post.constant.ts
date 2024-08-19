@@ -38,10 +38,19 @@ export const PostResponseMessage = {
   LikesCount: 'The number of likes have been counted.',
   JwtAuthError: 'Failed user authorization with jwt',
   ForbiddenReposting: 'Forbiddend reposting',
+  UserNotFound: 'User not found',
 } as const;
 
 export const QueryDescription = {
   PaginationList: 'Query parameters for pagination by list of posts',
   SearchedTitle: 'Post title to search for related posts',
   LastDate: 'Last mailing date'
+} as const;
+
+export const PostValidateMessage = {
+  UserNotAuthor: 'The user is not the author of this post',
+  UserAlreadyAuthor: 'You are already the author of this post',
+  CannotRepostDraft: 'You cannot repost posts in draft status',
+  AlreadyReposted: 'You are already reposted this post',
+  LikeOnlyPublished: 'You can only like published articles'
 } as const;

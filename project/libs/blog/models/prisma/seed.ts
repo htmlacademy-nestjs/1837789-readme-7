@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { Types } from 'mongoose';
 
 const mockUsersId = [
   '65a3f63cc013e4c03afc6a9d',
@@ -15,11 +16,6 @@ const mockPostId = [
   '6d308040-06a2-4162-bea6-2398e9976543',
   '6d308040-06a2-4162-bea6-2398e9976544'
 ];
-
-enum UserId {
-  First = '658170cbb974e9f5b946pcf4',
-  Second = '6841762309c030b503e37622',
-}
 
 enum PostType {
   Video = 'Video',
@@ -70,19 +66,25 @@ const mockComments = [
 
 const mockPosts = mockPostId.map((id) => {
   const type = getRandomElement(Object.values(PostType));
+  const likes = Array.from({ length: Math.floor(Math.random() * 20) }, () => {
+    return new Types.ObjectId().toString();
+  });
   const randomNumber = randomInt(0, mockComments.length);
   const userId = getRandomElement(mockUsersId);
   return {
       id: id,
+      originalId: null,
       type,
       status: PostStatus.Published,
       userId: userId,
+      originalUserId: null,
       title: 'First Post',
       createdAt: new Date(),
       updatedAt: new Date(),
       isRepost: false,
       tags: ['#aggd', '#oooo'],
-      likes: [ UserId.First , UserId.Second],
+      likes,
+      likesCount: likes.length,
       comments: mockComments.slice(0, randomNumber),
 
       name: (type === PostType.Video || type === PostType.Text) ? 'Post' : undefined,
@@ -96,6 +98,7 @@ const mockPosts = mockPostId.map((id) => {
       description: type === PostType.Link ? 'Another link' : undefined,
   }
 })
+
 async function seedDb(prismaClient: PrismaClient) {
   for (const post of mockPosts) {
     await prismaClient.post.upsert({
@@ -112,6 +115,7 @@ async function seedDb(prismaClient: PrismaClient) {
         tags: post.tags,
         isRepost: post.isRepost,
         likes: post.likes,
+        likesCount: post.likesCount,
         comments: post.comments ? {
           create: post.comments
         } : undefined,

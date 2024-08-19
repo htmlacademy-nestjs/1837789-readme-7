@@ -45,7 +45,7 @@ export class PostQuery {
   @IsString()
   @IsMongoId()
   @IsOptional()
-  public authorId: string;
+  public userId: string;
 
   @IsString()
   @IsOptional()

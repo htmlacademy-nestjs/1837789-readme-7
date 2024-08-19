@@ -12,6 +12,13 @@ export class PostRdo {
   public id: string;
 
   @ApiProperty({
+    description: 'If the post is a repost, then this id points to the original post',
+    example: 'ccaf61d0-0530-4cfc-98fa-4712838d9d96'
+  })
+  @Expose()
+  public originalId: string;
+
+  @ApiProperty({
     description: 'Post types enum',
     enum: PostType,
     example: PostType.Text
@@ -25,6 +32,13 @@ export class PostRdo {
   })
   @Expose()
   public userId: string;
+
+  @ApiProperty({
+    description: 'If the post is a repost, then this id points to the original post author',
+    example: '661022d3615ce5c3c722054f'
+  })
+  @Expose()
+  public originalUserId: string;
 
   @ApiProperty({
     description: 'Post title',
@@ -63,6 +77,9 @@ export class PostRdo {
   @Expose()
   public likes: string[];
 
+  @Expose()
+  public likesCount: number;
+
   @ApiProperty({
     description: 'List of user comments to this post',
     isArray: true,
@@ -83,5 +100,66 @@ export class PostRdo {
   @Type(() => CommentRdo)
   public comments: Comment[];
 
+  @ApiProperty({
+    description: 'Post name',
+    example: 'Dream house'
+  })
+  @Expose()
+  public name: string;
 
+  @ApiProperty({
+    description: 'Video url',
+    example: 'https://www.youtube.com/watch?v=0uqhAoMkFUc'
+  })
+  @Expose()
+  public urlVideo: string;
+
+  @ApiProperty({
+    description: 'Post announcement',
+    example: 'This is an amazing place!'
+  })
+  @Expose()
+  public annoncement: string;
+
+  @ApiProperty({
+    description: 'Post text',
+    example: 'This is an amazing place!'
+  })
+  @Expose()
+  public text: string;
+
+  @ApiProperty({
+    description: 'Quotation text',
+    example: 'You cannot solve a problem at the same level at which it originated.'
+  })
+  @Expose()
+  public textQuotation: string;
+
+  @ApiProperty({
+    description: 'The quotation author',
+    example: 'Albert Einstein',
+  })
+  @Expose()
+  public authorQuotation: string;
+
+  @ApiProperty({
+    description: 'Photo ID for a photo post',
+    example: '661022d3615ce5c3c722054f'
+  })
+  @Expose()
+  public photo: string;
+
+  @ApiProperty({
+    description: 'Link url',
+    example: 'https://15.design.htmlacademy.pro/static/avatar/4.jpg'
+  })
+  @Expose()
+  public urlLink: string;
+
+  @ApiProperty({
+    description: 'Link description',
+    example: 'This is an amazing place!'
+  })
+  @Expose()
+  public description: string;
 }

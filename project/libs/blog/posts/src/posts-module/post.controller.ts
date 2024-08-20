@@ -113,6 +113,7 @@ export class PostController {
     status: HttpStatus.NOT_FOUND,
     description: PostResponseMessage.PostNotFound
   })
+  @UseGuards(CheckAuthGuard)
   @Post('/:postId/comments')
   public async createComment(@Param('postId') postId: string, @Body() dto: CreateCommentDto) {
     const newComment = await this.postService.addComment(postId, dto);
@@ -128,6 +129,7 @@ export class PostController {
     status: HttpStatus.NOT_FOUND,
     description: PostResponseMessage.PostNotFound,
   })
+  @UseGuards(CheckAuthGuard)
   @Post('/repost/:postId')
   public async repost(@Req(){ user }: RequestWithUser, @Param('postId') postId: string): Promise<PostRdo> {
     const newPost = await this.postService.repostPost(user.id, postId);
@@ -175,7 +177,6 @@ export class PostController {
     description: PostResponseMessage.JwtAuthError
   })
   @ApiQuery({ type: 'date', description: QueryDescription.LastDate })
-  @UseGuards(CheckAuthGuard)
   @Get('/find-after-date')
   public async findAfterDate(@Query('date') date: Date) {
     const posts = await this.postService.findAfterDate(date);
@@ -195,6 +196,7 @@ export class PostController {
   @UseGuards(CheckAuthGuard)
   @Get('/draft')
   public async getUserDraftPosts(@Req() { user }: RequestWithUser) {
+    console.log(user);
     const postWithPagination = await this.postService
       .getAllPosts({ userId: user.id } as PostQuery, true);
 
@@ -231,8 +233,6 @@ export class PostController {
     status: HttpStatus.OK,
     description: PostResponseMessage.FoundPostList
   })
-  @ApiQuery({ type: PostQuery, description: QueryDescription.PaginationList })
-  @UseGuards(CheckAuthGuard)
   @HttpCode(HttpStatus.OK)
   @Post('/ribbon')
   public async contentRibbon(@Body() usersIds: string[], @Query() query: PostQuery) {

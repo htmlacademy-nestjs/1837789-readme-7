@@ -3,22 +3,22 @@ GET http://localhost:3005/api/posts HTTP/1.1
 
 ###
 
-# 1.17. Поиск публикаций по названию.
+# Поиск публикаций по названию.
 GET http://localhost:3005/api/posts?title=First HTTP/1.1
 
 ###
 
-# Get posts with filter: type = "Text"
+# Поиск публикаций по фильтру: type = "Text"
 GET http://localhost:3005/api/posts?type=Text HTTP/1.1
 
 ###
 
 # Просмотр детальной информации о публикации.
-GET http://localhost:3000/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
+GET http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
 
 ###
 
-# 1.3. Создание новых публикаций в блоге разных видов: видео, текст, цитата, фото, ссылка.
+# Создание новых публикаций в блоге.
 POST http://localhost:3005/api/posts HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQwMzJmYmU0Y2FlYjg2OGM2ZWVjMzYiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoidXNlciIsImxhc3RuYW1lIjoiU21pdGgiLCJmaXJzdG5hbWUiOiJLZWtzIiwiaWF0IjoxNjgzMTI0MTA5LCJleHAiOjE2ODMxMjQ3MDl9.oHiIvy7hGEuDaI7e7Jspbcd68_5CMKNe2qzkMV6bDe8
 Content-Type: application/json
@@ -27,10 +27,95 @@ Content-Type: application/json
   "title": "Hello world 123",
   "type": "Text",
   "status": "Draft",
-  "userId": "65a3f65f2c1c3209873906fb",
   "tags": ["test_tag"],
   "name": "sdkjsdjgldjgdlj",
   "annoncement": "dto.annoncement",
   "text": "dto.text"
 }
 ###
+
+# Комментирование публикаций в блоге.
+POST http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976540/comments HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
+Content-Type: application/json
+
+{
+  "message": "This is text",
+  "userId": "66c1ffddfb335a0c886bd1bc"
+}
+
+###
+
+# Пользователи могут оставлять лайки для публикаций, которые находятся в состоянии «Опубликована».
+PATCH  http://localhost:3001/api/posts/like/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
+
+###
+
+# Авторизованные пользователи могут репостить публикации
+POST http://localhost:3005/api/posts/repost/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
+Content-Type: application/json
+
+###
+
+# Удаление публикаций в блоге.
+DELETE http://localhost:3005/api/posts/0549e0e7-ad8c-43b8-aa35-507ba547d743 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
+###
+
+# Редактирование публикаций в блоге.
+PATCH http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
+Content-Type: application/json
+
+{
+  "title": "Hello world update1",
+  "tags": ["update_tag"]
+}
+
+###
+
+# Получить список публикаций пользователей в статусе: Draft
+GET http://localhost:3005/api/posts/draft HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
+
+###
+
+# Получить список публикаций, отфильтрованных конкретным пользователем
+GET http://localhost:3005/api/posts/user/663b6d0bf48517d912b1b267 HTTP/1.1
+
+###
+
+# Создание поста с загрузкой изображения
+POST http://localhost:3005/api/posts HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDI4NThlMjQ0YTI5MTc0ODEzNmExNCIsImVtYWlsIjoidGVzdC11c2VyNTdAbWFpbC5ydSIsIm5hbWUiOiJUZXN0VXNlciIsImlhdCI6MTcxNTYzNjQ3MCwiZXhwIjoxNzE1NzIyODcwfQ.aQaOlTCIDoEUybFnVCtVbTO3J5Xw4JnWzFv_gyTCis4
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="photo"; filename="/user/photo.jpg"
+Content-Type: image/jpeg
+
+< /user/photo.jpg
+
+--boundary
+Content-Disposition: form-data; name="title"
+
+Photo Post
+--boundary
+Content-Disposition: form-data; name="type"
+
+Photo
+--boundary
+Content-Disposition: form-data; name="status"
+
+Draft
+--boundary--
+
+###
+
+# сформировать контентную ленту пользователя
+GET http://localhost:3005/api/posts/content-feed?limit=3&page=1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDI4NThlMjQ0YTI5MTc0ODEzNmExNCIsImVtYWlsIjoidGVzdC11c2VyNTdAbWFpbC5ydSIsIm5hbWUiOiJUZXN0VXNlciIsImlhdCI6MTcxNTYzNjQ3MCwiZXhwIjoxNzE1NzIyODcwfQ.aQaOlTCIDoEUybFnVCtVbTO3J5Xw4JnWzFv_gyTCis4
+
+

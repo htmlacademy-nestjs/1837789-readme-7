@@ -5,3 +5,4 @@ export { PostFactory } from './posts-module/post.factory';
 export { PostController } from './posts-module/post.controller';
 export { CreatePostDto } from './posts-module/dto/create-post.dto';
 export { PostQuery } from './posts-module/post.query';
+export { UpdatePostDto } from './posts-module/dto/update-post.dto';

@@ -21,6 +21,7 @@ import { AuthUserMessage, AuthenticationResponseMessage } from './authentication
 import { LoginUserDto } from '../dto/login-user.dto';
 import { RefreshTokenService } from '../refresh-token-module/refresh-token.service';
 import { Types } from 'mongoose';
+import { NotifyService } from '@project/account-notify';
 
 @Injectable()
 export class AuthenticationService {
@@ -32,6 +33,7 @@ export class AuthenticationService {
     @Inject(jwtConfig.KEY) private readonly jwtOptions: ConfigType<typeof jwtConfig>,
     private readonly refreshTokenService: RefreshTokenService,
     private readonly httpService: HttpService,
+    private readonly notifyService: NotifyService,
   ) {}
 
   public async register(dto: CreateUserDto): Promise<BlogUserEntity> {
@@ -61,6 +63,48 @@ export class AuthenticationService {
       .save(userEntity);
 
     return userEntity;
+  }
+
+  private async getAvatarPath(fileId: string): Promise<string> {
+    if (!fileId) {
+      return '';
+    }
+
+    const data = await this.getAvatar(fileId);
+
+    return `${'statis'}/${data.subDirectory}/${data.hashName}`;
+  }
+
+  public async registerWithAvatar(dto: CreateUserDto) {
+    const {email, firstname, lastname, password, avatarUrl} = dto;
+
+    const blogUser = {
+      email,
+      firstname,
+      lastname,
+      avatarUrl,
+      registrationDate: null,
+      subscribers: [],
+      passwordHash: ''
+    }
+
+    const existUser = await this.blogUserRepository.findByEmail(email);
+    if (existUser) {
+      throw new ConflictException(AuthenticationResponseMessage.UserExist);
+    }
+
+    const userEntity = await new BlogUserEntity(blogUser).setPassword(password);
+
+    this.blogUserRepository.save(userEntity);
+
+    await this.notifyService.registerSubscriber({
+      id: userEntity.id,
+      email: userEntity.email,
+      firstname: userEntity.firstname,
+      lastname: userEntity.lastname,
+    });
+
+    return { ...userEntity.toPOJO(), avatar: await this.getAvatarPath(userEntity.avatarUrl) };
   }
 
   public async verifyUser(dto: LoginUserDto) {

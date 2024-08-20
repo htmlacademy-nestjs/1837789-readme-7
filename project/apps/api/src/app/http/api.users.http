@@ -12,6 +12,36 @@ Content-Type: application/json
 
 ###
 
+# Регистрация новых пользователей с загрузкой аватара.
+POST http://localhost:3005/api/users/register-with-avatar HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="/user/myAvatar.jpg"
+Content-Type: image/jpeg
+
+< /user/myAvatar.jpg
+
+--boundary
+Content-Disposition: form-data; name="email"
+
+alina@mail.ru
+--boundary
+Content-Disposition: form-data; name="firstname"
+
+Alina
+--boundary
+Content-Disposition: form-data; name="lastname"
+
+Vdovichenko
+--boundary
+Content-Disposition: form-data; name="password"
+
+1234567
+--boundary--
+
+###
+
 # Регистрация по паролю и емайлу
 POST http://localhost:3005/api/users/login HTTP/1.1
 Content-Type: application/json

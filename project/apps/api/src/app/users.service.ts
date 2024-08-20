@@ -24,4 +24,13 @@ export class UsersService {
 
     return { ...user, postsCount: posts.totalItems };
   }
+
+  public async registerWithAvatar(dto: CreateUserDto, avatar?: Express.Multer.File) {
+    const id = avatar ? (await saveFile(this.httpService, avatar)).id : undefined;
+
+    const { data } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Users}/register-with-avatar`,
+      { ...dto, avatarUrl: id });
+
+    return data;
+  }
 }

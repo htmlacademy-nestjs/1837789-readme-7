@@ -19,7 +19,7 @@ Content-Type: application/json
 
 # 1.18. Получение детальной информации о пользователе.
 
-GET http://localhost:3002/api/auth/66c1ffddfb335a0c886bd1bc HTTP/1.1
+GET http://localhost:3002/api/auth/66c2cc478d9341f624cd4831 HTTP/1.1
 
 ###
 
@@ -81,5 +81,5 @@ Content-Type: application/json
 
 # Получение списка пользователей, на которые подписан текущий пользователь
 GET http://localhost:3002/api/auth/get-publishers-list HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMTMzLCJleHAiOjE3MjQxNjY1MzN9.R-Aq0z6_THe8WZOktrKGxPD0wdIKm9aFOUJ7sshRXtk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MTY2OTM1LCJleHAiOjE3MjQyNTMzMzV9.unAQ3Wng7K7QUC858lGa9BxMZ4O4gOtcCfRRShzHZG0
 ###

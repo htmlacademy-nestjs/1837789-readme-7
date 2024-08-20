@@ -58,18 +58,6 @@ Content-Type: application/json
 
 ###
 
-# 1.8. Комментирование публикаций в блоге.
-POST http://localhost:3001/api/posts/6d308040-06a2-4162-bea6-2398e9976540/comments HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MTU5MDA5LCJleHAiOjE3MjQyNDU0MDl9.0iFSoE71EJtYavm1JTBAKhCK3NJGW1NFbxe84tZo5xg
-Content-Type: application/json
-
-{
-  "message": "This is text",
-  "userId": "66c1ffddfb335a0c886bd1bc"
-}
-
-###
-
 # 2.13. Авторизованные пользователи могут репостить публикации
 POST http://localhost:3001/api/posts/repost/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too

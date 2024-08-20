@@ -109,11 +109,10 @@ export class BlogController {
   @Get('/content-feed')
   public async contentFeed(@Req() { user }: RequestWithUser, @Query() query: PostQuery)
   {
-    const usersIds = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/get-publishers-list`, { params: { userId: user.id } });
-    console.log(usersIds);
-    const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/ribbon`, { params: { usersIds, query }});
-    console.log(data);
-
-    return data
+    const { data: publishers } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/get-publishers-list`);
+    const usersIds = publishers.reduce((list, publisher) => [...list, publisher.id], [user.id]);
+    const { data: posts } = await this.httpService.axiosRef.post(`${ApplicationServiceURL.Blog}/ribbon`,{ params: {usersIds} });
+    console.log(usersIds, posts, user, query);
+    return posts;
   }
 }

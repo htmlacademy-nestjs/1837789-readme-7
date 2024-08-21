@@ -47,7 +47,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3O
 ###
 
 # 1.5. Редактирование публикаций в блоге.
-PATCH http://localhost:3001/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
+PATCH http://localhost:3001/api/posts/6d35d118-d3db-4ad3-8453-943d47603ced HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MTU5MDA5LCJleHAiOjE3MjQyNDU0MDl9.0iFSoE71EJtYavm1JTBAKhCK3NJGW1NFbxe84tZo5xg
 Content-Type: application/json
 
@@ -66,7 +66,7 @@ Content-Type: application/json
 ###
 
 # 5.2. Пользователи могут оставлять лайки для публикаций, которые находятся в состоянии «Опубликована».
-PATCH  http://localhost:3001/api/posts/like/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
+PATCH  http://localhost:3001/api/posts/like/6d35d118-d3db-4ad3-8453-943d47603ced HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
 
 ###

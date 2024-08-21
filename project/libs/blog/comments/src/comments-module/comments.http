@@ -1,26 +1,26 @@
-# Create new comment for the post
-POST http://localhost:3001/api/posts/ccaf61d0-0530-4cfc-98fa-4712838d9d96/comments HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDBiNTBjMzNmODExMTE3MWRjZWI1NyIsImVtYWlsIjoidGVzdC11c2VyNUBtYWlsLnJ1IiwibmFtZSI6Ik5ld1VzZXIiLCJpYXQiOjE3MTU1MTg0MzMsImV4cCI6MTcxNTYwNDgzM30.SR8-Tat6isf7m1h890c0udIMGxcfJ6kkspZLmfq0CdM
+# Создание комментария
+POST http://localhost:3001/api/posts/6d308040-06a2-4162-bea6-2398e9976541/comments HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MjMxMDQ1LCJleHAiOjE3MjQzMTc0NDV9.GvJphEv2vobtAo0116fpIKJ6LAR5h5-rPhCgUz2Wi5I
 Content-Type: application/json
 
 {
-  "message": "Test post comment message..."
+  "message": "Test message!"
 }
 
 ###
 
-# Delete comment by id
-DELETE http://localhost:3001/api/posts/ccaf61d0-0530-4cfc-98fa-4712838d9d96/comments/b01dfa44-be41-49e3-bffe-5d5159762e49 HTTP/1.1
+# Удаление комментария
+DELETE http://localhost:3001/api/posts/6d308040-06a2-4162-bea6-2398e9976541/comments/1aeb3bca-ab71-4a3d-aec5-97f64784069c HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDBiNTBjMzNmODExMTE3MWRjZWI1NyIsImVtYWlsIjoidGVzdC11c2VyNUBtYWlsLnJ1IiwibmFtZSI6Ik5ld1VzZXIiLCJpYXQiOjE3MTU1MTg0MzMsImV4cCI6MTcxNTYwNDgzM30.SR8-Tat6isf7m1h890c0udIMGxcfJ6kkspZLmfq0CdM
 
 ###
 
-# Get comments list by a post id
-GET http://localhost:3001/api/posts/ccaf61d0-0530-4cfc-98fa-4712838d9d96/comments/find HTTP/1.1
+# Получение всех комментариев для определенного поста
+GET http://localhost:3001/api/posts/6d308040-06a2-4162-bea6-2398e9976541/comments/find HTTP/1.1
 
 ###
 
-# Get comment by id
-GET http://localhost:3001/api/posts/ccaf61d0-0530-4cfc-98fa-4712838d9d96/comments/7cda9493-3e9a-4324-b5fb-866067e20b4e HTTP/1.1
+# Получение комментария по Id
+GET http://localhost:3001/api/posts/6d308040-06a2-4162-bea6-2398e9976541/comments/1aeb3bca-ab71-4a3d-aec5-97f64784069c HTTP/1.1
 
 

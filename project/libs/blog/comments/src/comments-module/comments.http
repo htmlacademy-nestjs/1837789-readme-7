@@ -10,8 +10,8 @@ Content-Type: application/json
 ###
 
 # Удаление комментария
-DELETE http://localhost:3001/api/posts/6d308040-06a2-4162-bea6-2398e9976541/comments/1aeb3bca-ab71-4a3d-aec5-97f64784069c HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDBiNTBjMzNmODExMTE3MWRjZWI1NyIsImVtYWlsIjoidGVzdC11c2VyNUBtYWlsLnJ1IiwibmFtZSI6Ik5ld1VzZXIiLCJpYXQiOjE3MTU1MTg0MzMsImV4cCI6MTcxNTYwNDgzM30.SR8-Tat6isf7m1h890c0udIMGxcfJ6kkspZLmfq0CdM
+DELETE http://localhost:3001/api/posts/6d308040-06a2-4162-bea6-2398e9976540/comments/20f6f307-e49b-49cd-be4b-fc03341587ae HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MjMxMDQ1LCJleHAiOjE3MjQzMTc0NDV9.GvJphEv2vobtAo0116fpIKJ6LAR5h5-rPhCgUz2Wi5I
 
 ###
 

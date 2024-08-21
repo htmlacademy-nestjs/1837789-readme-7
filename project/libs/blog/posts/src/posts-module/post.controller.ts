@@ -7,7 +7,6 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { PostRdo } from './rdo/post.rdo';
 import { PostQuery } from './post.query';
 import { PostWithPaginationRdo } from './rdo/post-with-pagination.rdo';
-import { CreateCommentDto, CommentRdo } from '@project/comments';
 import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PostResponseMessage, QueryDescription, Default } from './post.constant';
 import { InjectUserIdInterceptor } from '@project/interceptors';
@@ -100,25 +99,6 @@ export class PostController {
     return fillDto(PostRdo, updatedPost.toPOJO());
   }
 
-  @ApiResponse({
-    type: CommentRdo,
-    status: HttpStatus.CREATED,
-    description: PostResponseMessage.CommentCreated
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: PostResponseMessage.CommentValidationError
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: PostResponseMessage.PostNotFound
-  })
-  @UseGuards(CheckAuthGuard)
-  @Post('/:postId/comments')
-  public async createComment(@Param('postId') postId: string, @Body() dto: CreateCommentDto) {
-    const newComment = await this.postService.addComment(postId, dto);
-    return fillDto(CommentRdo, newComment.toPOJO())
-  }
 
   @ApiResponse({
     type: PostRdo,

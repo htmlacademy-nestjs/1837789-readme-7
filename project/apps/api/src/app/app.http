@@ -1,4 +1,4 @@
-# 1.1. Регистрация новых пользователей.
+### Регистрация нового пользователя
 POST http://localhost:3005/api/users/register HTTP/1.1
 Content-Type: application/json
 
@@ -10,9 +10,8 @@ Content-Type: application/json
   "avatarUrl": "https://15.design.htmlacademy.pro/static/avatar/5.jpg"
 }
 
-###
 
-# Регистрация новых пользователей с загрузкой аватара.
+### Регистрация новых пользователей с загрузкой аватара.
 POST http://localhost:3005/api/users/register-with-avatar HTTP/1.1
 Content-Type: multipart/form-data; boundary=boundary
 
@@ -40,9 +39,8 @@ Content-Disposition: form-data; name="password"
 1234567
 --boundary--
 
-###
 
-# Регистрация по паролю и емайлу
+#### Авторизация пользователя
 POST http://localhost:3005/api/users/login HTTP/1.1
 Content-Type: application/json
 
@@ -51,15 +49,13 @@ Content-Type: application/json
   "password": "1234567"
 }
 
-###
 
-# Получение новой пары JWT
+### Запрос на обновление пары токенов
 POST http://localhost:3005/api/users/refresh HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoidXNlciIsImxhc3RuYW1lIjoiU21pdGgiLCJmaXJzdG5hbWUiOiJLZWtzIiwidG9rZW5JZCI6IjBiMzk0NDA1LWM0ZTQtNGRmMy04NGNjLTg4ZTI5YTRiOGJkZiIsImlhdCI6MTcxNDY2NDEwOSwiZXhwIjoxNzE3MjU2MTA5fQ.A_-yL6zgW1H6VJbfMzXpQvJnK5flYjpwYOZiCxybnio
 
-###
 
-# 1.19. Смена пароля пользователя.
+### Смена пароля пользователя.
 PATCH http://localhost:3005/api/users/change-password HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDI4NThlMjQ0YTI5MTc0ODEzNmExNCIsImVtYWlsIjoidGVzdC11c2VyNTdAbWFpbC5ydSIsIm5hbWUiOiJUZXN0VXNlciIsImlhdCI6MTcxNTYzNjQ3MCwiZXhwIjoxNzE1NzIyODcwfQ.aQaOlTCIDoEUybFnVCtVbTO3J5Xw4JnWzFv_gyTCis4
 Content-Type: application/json
@@ -69,9 +65,8 @@ Content-Type: application/json
   "newPassword": "7654321"
 }
 
-###
 
-# Получение публичной информации о пользователе (количество постов - только статус «Published»!)
+### Получение публичной информации о пользователе (количество постов - только статус «Published»!)
 GET http://localhost:3005/api/users/6642858e244a291748136a14 HTTP/1.1
 
 ###################################################################################
@@ -110,39 +105,25 @@ Content-Type: application/json
   "annoncement": "dto.annoncement",
   "text": "dto.text"
 }
-###
 
-# Комментирование публикаций в блоге.
-POST http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976540/comments HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
-Content-Type: application/json
 
-{
-  "message": "This is text",
-  "userId": "66c1ffddfb335a0c886bd1bc"
-}
-
-###
-
-# Пользователи могут оставлять лайки для публикаций, которые находятся в состоянии «Опубликована».
+### Пользователи могут оставлять лайки для публикаций, которые находятся в состоянии «Опубликована».
 PATCH  http://localhost:3001/api/posts/like/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
 
-###
 
-# Авторизованные пользователи могут репостить публикации
+### Авторизованные пользователи могут репостить публикации
 POST http://localhost:3005/api/posts/repost/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
 Content-Type: application/json
 
-###
 
-# Удаление публикаций в блоге.
+### Удаление публикаций в блоге.
 DELETE http://localhost:3005/api/posts/0549e0e7-ad8c-43b8-aa35-507ba547d743 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
-###
 
-# Редактирование публикаций в блоге.
+
+### Редактирование публикаций в блоге.
 PATCH http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
 Content-Type: application/json
@@ -152,20 +133,16 @@ Content-Type: application/json
   "tags": ["update_tag"]
 }
 
-###
-
-# Получить список публикаций пользователей в статусе: Draft
+### Получить список публикаций пользователей в статусе: Draft
 GET http://localhost:3005/api/posts/draft HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MDgwMzY1LCJleHAiOjE3MjQxNjY3NjV9.qZzB1QJCpq21LbTn0R4ReaxQyosFRweMOKpRVtB-too
 
-###
 
-# Получить список публикаций, отфильтрованных конкретным пользователем
+### Получить список публикаций, отфильтрованных конкретным пользователем
 GET http://localhost:3005/api/posts/user/663b6d0bf48517d912b1b267 HTTP/1.1
 
-###
 
-# Создание поста с загрузкой изображения
+### Создание поста с загрузкой изображения
 POST http://localhost:3005/api/posts HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDI4NThlMjQ0YTI5MTc0ODEzNmExNCIsImVtYWlsIjoidGVzdC11c2VyNTdAbWFpbC5ydSIsIm5hbWUiOiJUZXN0VXNlciIsImlhdCI6MTcxNTYzNjQ3MCwiZXhwIjoxNzE1NzIyODcwfQ.aQaOlTCIDoEUybFnVCtVbTO3J5Xw4JnWzFv_gyTCis4
 Content-Type: multipart/form-data; boundary=boundary
@@ -190,15 +167,14 @@ Content-Disposition: form-data; name="status"
 Draft
 --boundary--
 
-###
 
-# сформировать контентную ленту пользователя
+### сформировать контентную ленту пользователя
 GET http://localhost:3005/api/posts/content-feed?limit=3&page=1 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDI4NThlMjQ0YTI5MTc0ODEzNmExNCIsImVtYWlsIjoidGVzdC11c2VyNTdAbWFpbC5ydSIsIm5hbWUiOiJUZXN0VXNlciIsImlhdCI6MTcxNTYzNjQ3MCwiZXhwIjoxNzE1NzIyODcwfQ.aQaOlTCIDoEUybFnVCtVbTO3J5Xw4JnWzFv_gyTCis4
 
 ######################################################################################
 
-# Создание комментария
+### Создание комментария
 POST http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976541/comments HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MjMxMDQ1LCJleHAiOjE3MjQzMTc0NDV9.GvJphEv2vobtAo0116fpIKJ6LAR5h5-rPhCgUz2Wi5I
 Content-Type: application/json
@@ -207,25 +183,21 @@ Content-Type: application/json
   "message": "Test message!"
 }
 
-###
 
-# Удаление комментария
+### Удаление комментария
 DELETE http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976541/comments/1aeb3bca-ab71-4a3d-aec5-97f64784069c HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDBiNTBjMzNmODExMTE3MWRjZWI1NyIsImVtYWlsIjoidGVzdC11c2VyNUBtYWlsLnJ1IiwibmFtZSI6Ik5ld1VzZXIiLCJpYXQiOjE3MTU1MTg0MzMsImV4cCI6MTcxNTYwNDgzM30.SR8-Tat6isf7m1h890c0udIMGxcfJ6kkspZLmfq0CdM
 
-###
 
-# Получение всех комментариев для определенного поста
+### Получение всех комментариев для определенного поста
 GET http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976541/comments/find HTTP/1.1
 
-###
 
-# Получение комментария по Id
+### Получение комментария по Id
 GET http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976541/comments/1aeb3bca-ab71-4a3d-aec5-97f64784069c HTTP/1.1
 
-###
 
-# Рассылка с уведомлениями о новых сообщениях для всех пользователей
+### Рассылка с уведомлениями о новых сообщениях для всех пользователей
 GET http://localhost:3005/api/notify/new-posts-appeared HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NDI4NThlMjQ0YTI5MTc0ODEzNmExNCIsImVtYWlsIjoidGVzdC11c2VyNTdAbWFpbC5ydSIsIm5hbWUiOiJUZXN0VXNlciIsImlhdCI6MTcxNTYzNjQ3MCwiZXhwIjoxNzE1NzIyODcwfQ.aQaOlTCIDoEUybFnVCtVbTO3J5Xw4JnWzFv_gyTCis4
 

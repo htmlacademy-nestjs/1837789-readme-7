@@ -17,7 +17,7 @@ import { CommentFactory } from './comments.factory';
     PrismaClientModule
   ],
   controllers: [CommentController],
-  providers: [CommentService, CommentRepository, CommentFactory, CheckAuthGuard,],
+  providers: [CommentService, CommentRepository, CommentFactory, CheckAuthGuard],
   exports: [CommentRepository, CommentFactory]
 })
 export class CommentsModule {}

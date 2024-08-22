@@ -49,6 +49,20 @@ export class AuthenticationController {
   }
 
   @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: AuthenticationResponseMessage.UserCreated,
+  })
+  @ApiResponse({
+    status: HttpStatus.CONFLICT,
+    description: AuthenticationResponseMessage.UserExist,
+  })
+  @UseGuards(IsGuestGuard)
+  @Post('register-with-avatar')
+  public async createUserWithAvatar(@Body() dto: CreateUserDto) {
+    return fillDto(UserRdo, { ...(await this.authService.registerWithAvatar(dto)) })
+  }
+
+  @ApiResponse({
     type: LoggedUserRdo,
     status: HttpStatus.OK,
     description: AuthenticationResponseMessage.LoggedSuccess,

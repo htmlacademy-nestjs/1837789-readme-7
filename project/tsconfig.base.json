@@ -34,7 +34,11 @@
       ],
       "@project/helpers": ["libs/shared/helpers/src/index.ts"],
       "@project/interceptors": ["libs/shared/interceptors/src/index.ts"],
+      "@project/mail": ["libs/notify/mail/src/index.ts"],
       "@project/notify-config": ["libs/notify/config/src/index.ts"],
+      "@project/notify-newsletter": [
+        "libs/notify/notify-newsletter/src/index.ts"
+      ],
       "@project/pipes": ["libs/shared/pipes/src/index.ts"],
       "@project/posts": ["libs/blog/posts/src/index.ts"]
     }

@@ -1,15 +1,15 @@
 # Тест
-GET http://localhost:3001/api/auth/test HTTP/1.1
+GET http://localhost:3002/api/auth/test HTTP/1.1
 
 ###
 
 # 1.1. Регистрация новых пользователей.
-POST http://localhost:3001/api/auth/register HTTP/1.1
+POST http://localhost:3002/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "mark@gmail.com",
-  "firstname": "mark",
+  "email": "sten@gmail.com",
+  "firstname": "sten",
   "lastname": "Ross",
   "password": "1234567",
   "avatarUrl": "https://15.design.htmlacademy.pro/static/avatar/5.jpg"
@@ -19,67 +19,67 @@ Content-Type: application/json
 
 # 1.18. Получение детальной информации о пользователе.
 
-GET http://localhost:4000/api/auth/66c0ce8db8eee6c5990c0a85 HTTP/1.1
+GET http://localhost:3002/api/auth/66c2cc478d9341f624cd4831 HTTP/1.1
 
 ###
 
 # Регистрация по паролю и емайлу
-POST http://localhost:3001/api/auth/login HTTP/1.1
+POST http://localhost:3002/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "alina@gmail.com",
+  "email": "mark@gmail.com",
   "password": "1234567"
 }
 
 ###
 
 # Получение новой пары JWT
-POST http://localhost:3001/api/auth/refresh HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmMwY2U4ZGI4ZWVlNmM1OTkwYzBhODUiLCJlbWFpbCI6Im5pa0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJuaWsiLCJ0b2tlbklkIjoiMjQ1NDYwZjUtY2U3Yy00ZTYxLWI3YTYtZjJiYWQ2ODZhYjA5IiwiaWF0IjoxNzIzOTYwMTIxLCJleHAiOjE3MjY1NTIxMjF9.tWHPX1gPMIa4kT03Dl4IsA2G9VLcxvvpOxy6lVuaMlA
+POST http://localhost:3002/api/auth/refresh HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwidG9rZW5JZCI6ImJhNTJmMTI3LTBlNzUtNDc1Yy05OTk2LWY2MzI3MzZiMDFkYSIsImlhdCI6MTcyNDIzNjI2MSwiZXhwIjoxNzI2ODI4MjYxfQ.75qahnHGPHaPCB68woNDuBzscTd1f-FWKuZhGm2Gyaw
 
 ###
 
 # Check user token
-POST http://localhost:4000/api/auth/check HTTP/1.1
+POST http://localhost:3002/api/auth/check HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmMwY2U4ZGI4ZWVlNmM1OTkwYzBhODUiLCJlbWFpbCI6Im5pa0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJuaWsiLCJpYXQiOjE3MjM5NTc1MjMsImV4cCI6MTcyNDA0MzkyM30.KO8L0UIrOOXm8xyoRbKfqPx6_81mOzqPiwT6OdEPaHE
 
 ###
 
 # 1.19. Смена пароля пользователя.
-PATCH http://localhost:4000/api/auth/change-password HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzBjZThkYjhlZWU2YzU5OTBjMGE4NSIsImVtYWlsIjoibmlrQGdtYWlsLmNvbSIsImxhc3RuYW1lIjoiUm9zcyIsImZpcnN0bmFtZSI6Im5payIsImlhdCI6MTcyMzk2MTEzNywiZXhwIjoxNzI0MDQ3NTM3fQ.aFnCFBLDgpwKJmU9mlVEF3UayJVLVuoMQyG712u98M0
+PATCH http://localhost:3002/api/auth/change-password HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzFmZDdkMjMwMzkyMmI1MWRlNmI0MiIsImVtYWlsIjoiYWxpbmFAZ21haWwuY29tIiwibGFzdG5hbWUiOiJSb3NzIiwiZmlyc3RuYW1lIjoiYWxpbmEiLCJpYXQiOjE3MjQwNzk5MjYsImV4cCI6MTcyNDE2NjMyNn0.7WCkW3B67sVAjGEP6ohJ-b81FgoIKycMVTaIQ_MU8ms
 Content-Type: application/json
 
 {
-  "oldPassword": "7654321",
+  "oldPassword": "1234567",
   "newPassword": "1234567"
 }
 
 ###
 
 # 1.20. Подписка на других пользователей.
-PATCH http://localhost:4000/api/auth/subscribe HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzBjZThkYjhlZWU2YzU5OTBjMGE4NSIsImVtYWlsIjoibmlrQGdtYWlsLmNvbSIsImxhc3RuYW1lIjoiUm9zcyIsImZpcnN0bmFtZSI6Im5payIsImlhdCI6MTcyMzk2Mzg5MywiZXhwIjoxNzI0MDUwMjkzfQ.PHSQmv875CQauOqBWHTcmrIGjZPSN5k8TtrSGV6v8VI
+PATCH http://localhost:3002/api/auth/subscribe HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzFmZDdkMjMwMzkyMmI1MWRlNmI0MiIsImVtYWlsIjoiYWxpbmFAZ21haWwuY29tIiwibGFzdG5hbWUiOiJSb3NzIiwiZmlyc3RuYW1lIjoiYWxpbmEiLCJpYXQiOjE3MjQwNzk5MjYsImV4cCI6MTcyNDE2NjMyNn0.7WCkW3B67sVAjGEP6ohJ-b81FgoIKycMVTaIQ_MU8ms
 Content-Type: application/json
 
 {
-  "userId": "66c0cfadfa599e28fa94aa6c"
+  "userId": "66c2cc478d9341f624cd4831"
 }
 
 ###
 
 # Получение списка пользователей для сбора данных в API Gateway
-POST http://localhost:4000/api/auth/get-users-by-id HTTP/1.1
+POST http://localhost:3002/api/auth/get-users-by-id HTTP/1.1
 Content-Type: application/json
 
 {
-  "usersIds": ["66c0cfadfa599e28fa94aa6c", "66c0cef258e1d23490d04420"]
+  "usersIds": ["66c2cc478d9341f624cd4831", "66c1fd7d2303922b51de6b42"]
 }
 
 ###
 
-# Получение списка постов, на которые подписан текущий пользователь
-GET http://localhost:4000/api/auth/get-publishers-list HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzBjZWYyNThlMWQyMzQ5MGQwNDQyMCIsImVtYWlsIjoiYWxpbmFAZ21haWwuY29tIiwibGFzdG5hbWUiOiJSb3NzIiwiZmlyc3RuYW1lIjoiYWxpbmEiLCJpYXQiOjE3MjM5NjU5MzIsImV4cCI6MTcyNDA1MjMzMn0.5Qgy7M2EfQTrSNN_5LmxEHAmitXuQA775ENSLeLBnDU
+# Получение списка пользователей, на которые подписан текущий пользователь
+GET http://localhost:3002/api/auth/get-publishers-list HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzJjYzQ3OGQ5MzQxZjYyNGNkNDgzMSIsImVtYWlsIjoibWFya0BnbWFpbC5jb20iLCJsYXN0bmFtZSI6IlJvc3MiLCJmaXJzdG5hbWUiOiJtYXJrIiwiaWF0IjoxNzI0MzA2OTcwLCJleHAiOjE3MjQzOTMzNzB9.WKZmV4AjCDmqyguB89aEVP5igOdq0oj21DRs_2oemZg
 ###

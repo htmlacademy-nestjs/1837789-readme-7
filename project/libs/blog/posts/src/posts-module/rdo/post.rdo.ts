@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { CommentRdo } from '@project/comments';
-import { Comment, PostType } from '@project/core';
+import { Comment, PostType, PostStatus } from '@project/core';
 import { Expose, Type } from 'class-transformer';
 
 export class PostRdo {
@@ -25,6 +25,14 @@ export class PostRdo {
   })
   @Expose()
   public type: PostType
+
+  @ApiProperty({
+    description: 'Post statuses enum',
+    enum: PostStatus,
+    example: PostStatus.Published
+  })
+  @Expose()
+  public status: PostStatus;
 
   @ApiProperty({
     description: 'Post author ID',

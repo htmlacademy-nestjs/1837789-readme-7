@@ -1,9 +1,12 @@
 import { registerAs } from '@nestjs/config';
 import Joi from 'joi';
 
-const DEFAULT_PORT = 3000;
-const DEFAULT_MONGO_PORT = 27017;
 const ENVIRONMENTS = ['development', 'production', 'stage'] as const;
+
+export enum Default {
+  Port = 3000,
+  MongoPort = 27017
+}
 
 type Environment = typeof ENVIRONMENTS[number];
 
@@ -23,7 +26,7 @@ export interface FileStorageConfig {
 
 const validationSchema = Joi.object({
   environment: Joi.string().valid(...ENVIRONMENTS).required(),
-  port: Joi.number().port().default(DEFAULT_PORT),
+  port: Joi.number().port().default(Default.Port),
   uploadDirectory: Joi.string().required(),
   db: Joi.object({
     host: Joi.string().valid().hostname(),
@@ -45,11 +48,11 @@ function validateConfig(config: FileStorageConfig): void {
 function getConfig(): FileStorageConfig {
   const config: FileStorageConfig = {
     environment: process.env.NODE_ENV as Environment,
-    port: parseInt(process.env.PORT || `${DEFAULT_PORT}`, 10),
+    port: parseInt(process.env.PORT || `${Default.Port}`, 10),
     uploadDirectory: process.env.UPLOAD_DIRECTORY_PATH,
     db: {
       host: process.env.MONGO_HOST,
-      port: parseInt(process.env.MONGO_PORT ?? DEFAULT_MONGO_PORT.toString(), 10),
+      port: parseInt(process.env.MONGO_PORT ?? Default.MongoPort.toString(), 10),
       name: process.env.MONGO_DB,
       user: process.env.MONGO_USER,
       password: process.env.MONGO_PASSWORD,

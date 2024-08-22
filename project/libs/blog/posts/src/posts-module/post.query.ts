@@ -5,25 +5,24 @@ import { SortDirection } from '@project/core';
 import { PostType } from '@project/core';
 
 import {
-  DEFAULT_POST_COUNT_LIMIT,
   DEFAULT_SORT_DIRECTION,
-  DEFAULT_PAGE_COUNT
+  Default
 } from './post.constant';
 
 
 export class PostQuery {
-  @Transform(({ value }) => +value || DEFAULT_POST_COUNT_LIMIT)
+  @Transform(({ value }) => +value || Default.PostCountLimit)
   @IsNumber()
   @IsOptional()
-  public limit = DEFAULT_POST_COUNT_LIMIT;
+  public limit = Default.PostCountLimit;
 
   @IsIn(Object.values(SortDirection))
   @IsOptional()
   public sortDirection: SortDirection = DEFAULT_SORT_DIRECTION;
 
-  @Transform(({ value }) => +value || DEFAULT_PAGE_COUNT)
+  @Transform(({ value }) => +value || Default.PageCount)
   @IsOptional()
-  public page: number = DEFAULT_PAGE_COUNT;
+  public page: number = Default.PageCount;
 
   @IsString()
   @IsOptional()

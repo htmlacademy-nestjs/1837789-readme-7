@@ -182,7 +182,6 @@ export class AuthenticationController {
   @UseGuards(JwtAuthGuard)
   @Get('/get-publishers-list')
   public async getPublishersList(@Req() { user }: RequestWithUser) {
-    console.log(user);
     const publishers = await this.authService.getPublishersList(user.id);
     return publishers.map(publisher => fillDto(UserRdo, { ...publisher.toPOJO() }));
   }

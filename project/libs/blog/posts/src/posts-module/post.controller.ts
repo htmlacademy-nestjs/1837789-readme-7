@@ -176,7 +176,6 @@ export class PostController {
   @UseGuards(CheckAuthGuard)
   @Get('/draft')
   public async getUserDraftPosts(@Req() { user }: RequestWithUser) {
-    console.log(user);
     const postWithPagination = await this.postService
       .getAllPosts({ userId: user.id } as PostQuery, true);
 

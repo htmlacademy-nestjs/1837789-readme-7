@@ -85,7 +85,6 @@ export class PostRepository extends BasePostgresRepository<PostEntity, CommonPos
     const where: Prisma.PostWhereInput = {};
     const orderBy: Prisma.PostOrderByWithRelationInput = {};
     where.status = isOnlyDraft ? PostStatus.Draft : PostStatus.Published;
-    console.log(isOnlyDraft);
 
     if (usersIds?.length > 0) {
       where.userId = { in: usersIds };

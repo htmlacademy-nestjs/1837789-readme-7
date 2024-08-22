@@ -3,8 +3,8 @@ POST http://localhost:3005/api/users/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "mik@gmail.com",
-  "firstname": "mik",
+  "email": "ken@gmail.com",
+  "firstname": "ken",
   "lastname": "Ross",
   "password": "1234567",
   "avatarUrl": "https://15.design.htmlacademy.pro/static/avatar/5.jpg"
@@ -52,7 +52,7 @@ Content-Type: application/json
 
 ### Запрос на обновление пары токенов
 POST http://localhost:3005/api/users/refresh HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJlbWFpbCI6InVzZXJAbm90Zm91bmQubG9jYWwiLCJyb2xlIjoidXNlciIsImxhc3RuYW1lIjoiU21pdGgiLCJmaXJzdG5hbWUiOiJLZWtzIiwidG9rZW5JZCI6IjBiMzk0NDA1LWM0ZTQtNGRmMy04NGNjLTg4ZTI5YTRiOGJkZiIsImlhdCI6MTcxNDY2NDEwOSwiZXhwIjoxNzE3MjU2MTA5fQ.A_-yL6zgW1H6VJbfMzXpQvJnK5flYjpwYOZiCxybnio
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzFmZDdkMjMwMzkyMmI1MWRlNmI0MiIsImVtYWlsIjoiYWxpbmFAZ21haWwuY29tIiwibGFzdG5hbWUiOiJSb3NzIiwiZmlyc3RuYW1lIjoiYWxpbmEiLCJ0b2tlbklkIjoiM2VmMmNhMDYtMmNhNC00NTU0LWJkNzctOTQwM2NlMmQ4MzY2IiwiaWF0IjoxNzI0MzA2ODk4LCJleHAiOjE3MjY4OTg4OTh9.Kf8NSJhqy442kAAaVrxV9XPL7wT39Hzxg4iSWA70AdE
 
 
 ### Смена пароля пользователя.
@@ -87,7 +87,7 @@ GET http://localhost:3005/api/posts?type=Text HTTP/1.1
 ###
 
 # Просмотр детальной информации о публикации.
-GET http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976540 HTTP/1.1
+GET http://localhost:3005/api/posts/6d308040-06a2-4162-bea6-2398e9976541 HTTP/1.1
 
 ###
 

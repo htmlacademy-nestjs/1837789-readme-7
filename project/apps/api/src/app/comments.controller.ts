@@ -7,7 +7,7 @@ import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 
 @Controller('posts/:postId/comments')
 @UseFilters(AxiosExceptionFilter)
-export class BlogCommentController {
+export class CommentController {
   constructor(private readonly httpService: HttpService) { }
 
   @Get('/')
